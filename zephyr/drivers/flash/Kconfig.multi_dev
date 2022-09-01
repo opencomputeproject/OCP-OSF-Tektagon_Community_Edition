@@ -1,0 +1,69 @@
+# Copyright (c) 2018 Savoir-Faire Linux.
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig SPI_NOR_MULTI_DEV
+	bool "SPI NOR Flash - Multiple Device"
+	select FLASH_HAS_DRIVER_ENABLED
+	select FLASH_PAGE_LAYOUT
+	select FLASH_HAS_PAGE_LAYOUT
+	select FLASH_JESD216
+	select FLASH_JESD216_API
+	depends on SPI && !SPI_NOR
+
+if SPI_NOR_MULTI_DEV
+
+choice SPI_NOR_SFDP
+	prompt "Source for Serial Flash Discoverable Parameters"
+	default SPI_NOR_SFDP_RUNTIME
+
+config SPI_NOR_SFDP_MINIMAL
+	bool "Fixed flash configuration"
+	help
+	  Synthesize a minimal configuration assuming 256 By page size and
+	  standard 4 KiBy and 64 KiBy erase instructions.  Requires the size and
+	  jedec-id properties in the devicetree jedec,spi-nor node.
+
+config SPI_NOR_SFDP_DEVICETREE
+	bool "Basic Flash Parameters from devicetree node"
+	help
+	  The JESD216 Basic Flash Parameters table must be provided in the
+	  sfdp-bfp property in devicetree.  The size and jedec-id properties are
+	  also required.
+
+config SPI_NOR_SFDP_RUNTIME
+	bool "Read flash parameters at runtime"
+	help
+	  Read all flash device characteristics from the device at runtime.
+	  This option is the most flexible as it should provide functionality
+	  for all supported JESD216-compatible devices.
+
+endchoice
+
+config SPI_NOR_INIT_PRIORITY
+	int
+	default 80
+	help
+	  Device driver initialization priority.
+	  Device is connected to SPI bus, it has to
+	  be initialized after SPI driver.
+
+config SPI_NOR_FLASH_LAYOUT_PAGE_SIZE
+	int "Page size to use for FLASH_LAYOUT feature"
+	default 65536
+	help
+	  When CONFIG_FLASH_PAGE_LAYOUT is used this driver will support
+	  that API.  By default the page size corresponds to the block
+	  size (65536).  Other options include the 32K-byte erase size
+	  (32768), the sector size (4096), or any non-zero multiple of the
+	  sector size.
+
+config SPI_NOR_ADDR_MODE_FALLBACK_DISABLED
+	bool "Address mode fallback disable"
+	default n
+	help
+	  If this configuration is enabled and the flash was ever set
+	  to 4-byte mode before, the driver will force to set the flash
+	  to 4-byte mode before read, write or erase flash memory
+	  operation no matter the current address mode of the flash is.
+
+endif # SPI_NOR_MULTI_DEV

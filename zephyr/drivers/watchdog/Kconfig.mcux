@@ -1,0 +1,22 @@
+# Watchdog configuration options
+
+# Copyright (c) 2018, NXP
+# SPDX-License-Identifier: Apache-2.0
+
+config WDT_MCUX_WDOG
+	bool "MCUX WDOG driver"
+	depends on HAS_MCUX && !HAS_MCUX_WDOG32 && CLOCK_CONTROL
+	help
+	  Enable the mcux wdog driver.
+
+config WDT_MCUX_WDOG32
+	bool "MCUX WDOG32 driver"
+	depends on HAS_MCUX_WDOG32 && CLOCK_CONTROL
+	help
+	  Enable the mcux wdog32 driver.
+
+config WDT_MCUX_WWDT
+	bool "MCUX WWDT driver"
+	depends on HAS_MCUX_WWDT
+	help
+	  Enable the mcux wwdt driver.

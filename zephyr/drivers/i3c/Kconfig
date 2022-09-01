@@ -1,0 +1,27 @@
+# I3C configuration options
+
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig I3C
+	bool "I3C Drivers"
+	help
+	  Enable I3C Driver.
+
+if I3C
+config I3C_SHELL
+	bool "Enable I3C Shell"
+	default y
+	depends on SHELL
+	select SHELL_GETOPT
+	help
+	  Enable I3C Shell for testing.
+
+module = I3C
+module-str = I3C
+source "subsys/logging/Kconfig.template.log_config"
+
+source "drivers/i3c/slave/Kconfig"
+source "drivers/i3c/Kconfig.aspeed"
+
+endif # I3C

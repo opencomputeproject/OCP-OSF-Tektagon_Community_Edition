@@ -1,0 +1,19 @@
+; -----------------------------------------------------------------------------
+; teraterm script for loading Aspeed Zephyr SDK image via AST1030 HW UART boot
+;
+; prerequisite:
+;   1. EVB: boot strap is set to "UART boot"
+;   2. EVB: serial UART5 is working
+;   3. uart_zephyr.bin
+;
+; usage:
+;   teraterm -> Control -> Macro -> select this file
+;
+; expected result:
+; 	UUP0c00
+; 	<AST1030 bic power-on message>
+; -----------------------------------------------------------------------------
+filename = 'd:\tmp\uart_zephyr.bin'
+; -----------------------------------------------------------------------------
+;wait 'UU'
+sendfile filename 1

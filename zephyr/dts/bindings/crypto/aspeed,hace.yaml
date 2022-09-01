@@ -1,0 +1,21 @@
+#
+# Copyright (c) ASPEED
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+description: ASPEED Hash and Crypto Engine
+
+compatible: "aspeed,hace"
+
+include: base.yaml
+
+properties:
+    reg:
+      required: true
+
+    clocks:
+      required: true
+
+    resets:
+      required: true

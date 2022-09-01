@@ -1,0 +1,3 @@
+tests:
+  kernel.queue:
+    tags: kernel userspace ignore_faults

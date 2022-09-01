@@ -1,0 +1,15 @@
+# ASPEED SPI Monitor
+
+# Copyright (c) 2021 ASPEED Technology Inc. <chin-ting_kuo@aspeedtech.com>
+# SPDX-License-Identifier: Apache-2.0
+
+config SPI_MONITOR_ASPEED
+	bool "ASPEED SPI Monitor Driver"
+	help
+	  Enable ASPEED SPI monitor controller driver.
+
+config SPI_MONITOR_SHELL_ASPEED
+	bool "ASPEED SPI Monitor SHELL"
+	help
+	  Enable ASPEED SPI monitor shell commands.
+

@@ -1,0 +1,124 @@
+/*
+ * Copyright (c) 2017 Linaro Limited
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <nordic/nrf51822_qfaa.dtsi>
+
+/ {
+	model = "BBC Micro:bit";
+	compatible = "bbc,microbit";
+
+	/* These aliases are provided for compatibility with samples */
+	aliases {
+		sw0 = &buttonA;
+		sw1 = &buttonB;
+	};
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,bt-mon-uart = &uart0;
+		zephyr,bt-c2h-uart = &uart0;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		buttonA: button_0 {
+			label = "BTN_A";
+			gpios = <&gpio0 17 GPIO_ACTIVE_LOW>;
+		};
+
+		buttonB: button_1 {
+			label = "BTN_B";
+			gpios = <&gpio0 26 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&uart0 {
+	status = "okay";
+	current-speed = <115200>;
+	tx-pin = <24>;
+	rx-pin = <25>;
+};
+
+&i2c0 {
+	status = "okay";
+	clock-frequency = <I2C_BITRATE_FAST>;
+	sda-pin = <30>;
+	scl-pin = <0>;
+
+	/* See https://tech.microbit.org/hardware/i2c/ for board variants */
+
+	/* v1.3 MMA8653FC (= FXOS8700) + MAG3110 */
+	mma8653fc@1d {
+		compatible = "nxp,fxos8700", "nxp,mma8653fc";
+		status = "okay";
+		reg = <0x1d>;
+		label = "MMA8653FC";
+		int1-gpios = <&gpio0 28 GPIO_ACTIVE_LOW>;
+		int2-gpios = <&gpio0 27 GPIO_ACTIVE_LOW>;
+	};
+
+	/* v1.5 variant 1 LSM303AGR */
+	lsm303agr-magn@1e {
+		compatible = "st,lis2mdl", "st,lsm303agr-magn";
+		status = "disabled";
+		reg = <0x1e>;
+		label = "LSM303AGR-MAGN";
+		irq-gpios = <&gpio0 27 GPIO_ACTIVE_HIGH>;	/* A3 */
+	};
+
+	lsm303agr-accel@19 {
+		compatible = "st,lis2dh", "st,lsm303agr-accel";
+		status = "disabled";
+		reg = <0x19>;
+		label = "LSM303AGR-ACCEL";
+		irq-gpios = <&gpio0 28 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&flash0 {
+
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 0x8000>;
+		};
+		slot0_partition: partition@8000 {
+			label = "image-0";
+			reg = <0x00008000 0x1a000>;
+		};
+		slot1_partition: partition@22000 {
+			label = "image-1";
+			reg = <0x00022000 0x1a000>;
+		};
+		scratch_partition: partition@3c000 {
+			label = "image-scratch";
+			reg = <0x0003c000 0x2000>;
+		};
+		storage_partition: partition@3e000 {
+			label = "storage";
+			reg = <0x0003e000 0x00002000>;
+		};
+	};
+};

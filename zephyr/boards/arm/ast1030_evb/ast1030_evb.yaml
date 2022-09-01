@@ -1,0 +1,15 @@
+identifier: ast1030_evb
+name: AST1030-EVB
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+supported:
+  - pwm
+  - gpio
+  - adc
+  - usb_device
+testing:
+  default: true
+ram: 768
+flash: 512

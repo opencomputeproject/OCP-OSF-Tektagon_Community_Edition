@@ -1,0 +1,14 @@
+# Copyright (c) 2021, ASPEED
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED LPC SNOOP
+
+compatible: "aspeed,snoop"
+
+include: base.yaml
+
+properties:
+    port:
+      type: array
+      required: true
+      description: Snoop I/O port addresses

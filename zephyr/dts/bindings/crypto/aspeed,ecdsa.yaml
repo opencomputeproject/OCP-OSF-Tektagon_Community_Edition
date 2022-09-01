@@ -1,0 +1,15 @@
+#
+# Copyright (c) ASPEED
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+description: ASPEED ECDSA Engine
+
+compatible: "aspeed,ecdsa"
+
+include: base.yaml
+
+properties:
+    reg:
+      required: true

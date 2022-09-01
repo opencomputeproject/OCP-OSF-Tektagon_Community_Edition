@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (c) 2021 ASPEED Technology Inc.
+
+config CACHE_ASPEED
+	bool "ASPEED external cache driver"
+	depends on SOC_SERIES_AST10X0 || SOC_SERIES_AST26XX
+	select CACHE_HAS_DRIVER
+	help
+	  This option enables the CACHE driver for ASPEED AST26XX & AST10X0 series SOC.
+
+
+if CACHE_ASPEED
+config CACHE_ASPEED_FIXUP_INVALID
+	bool "Bug fix of cache invalidation"
+	default y
+	help
+	  This option enables the fix of the cache invalidation bug on AST10X0 A0 and AST26XX A2.
+endif

@@ -1,0 +1,5 @@
+sample:
+  name: Aspeed eSPI OOB loopback test
+tests:
+  sample.board.ast1030_evb:
+    platform_allow: ast1030_evb

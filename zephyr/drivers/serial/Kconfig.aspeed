@@ -1,0 +1,15 @@
+# ASPEED UART driver configuration options
+
+# Copyright (c) 2020 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config UART_ASPEED
+	bool "ASPEED ns16550a serial driver"
+	select SERIAL_HAS_DRIVER
+	select SERIAL_SUPPORT_INTERRUPT
+	select UART_INTERRUPT_DRIVEN
+	depends on SOC_FAMILY_ASPEED
+	help
+	  This option enables the UART driver for ASPEED family of
+	  processors.
+	  Say y if you wish to use serial port on ASPEED SoCs.

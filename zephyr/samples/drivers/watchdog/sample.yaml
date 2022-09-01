@@ -1,0 +1,30 @@
+sample:
+  name: Watchdog Driver Sample
+tests:
+  sample.drivers.watchdog:
+    tags: drivers
+    harness: console
+    harness_config:
+        type: multi_line
+        ordered: true
+        regex:
+            - "Watchdog sample application"
+            - "Feeding watchdog..."
+            - "Waiting for reset..."
+            - "Watchdog sample application"
+    depends_on: watchdog
+    filter: not dt_compat_enabled("st,stm32-window-watchdog")
+  sample.drivers.watchdog.stm32wwdg:
+    tags: drivers
+    harness: console
+    harness_config:
+        type: multi_line
+        ordered: true
+        regex:
+            - "Watchdog sample application"
+            - "Feeding watchdog..."
+            - "Waiting for reset..."
+            - "Watchdog sample application"
+    tags: drivers watchdog
+    filter: dt_compat_enabled("st,stm32-window-watchdog")
+    depends_on: watchdog

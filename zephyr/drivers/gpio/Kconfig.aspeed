@@ -1,0 +1,38 @@
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config GPIO_ASPEED
+	bool "ASPEED GPIO Controllers"
+	depends on SOC_FAMILY_ASPEED
+	select DYNAMIC_INTERRUPTS
+	help
+	  Enable config options to support the ASPEED GPIO controllers.
+
+config GPIO_ASPEED_PERMIT_LOCK
+	bool "Lock the GPIO access permission"
+	depends on GPIO_ASPEED
+	depends on SOC_AST2600 || SOC_AST2605
+	default n
+	help
+	  Use command source new mode to lock the gpio access permission.
+
+config GPIO_ASPEED_INIT_PRIORITY
+	int "Init priority"
+	depends on GPIO_ASPEED
+	default 60
+	help
+	  Device driver initialization priority.
+
+config GPIO_ASPEED_SGPIOM
+	bool "ASPEED SGPIOM Controllers"
+	depends on SOC_FAMILY_ASPEED
+	select DYNAMIC_INTERRUPTS
+	help
+	  Enable config options to support the ASPEED SGPIOM controllers.
+
+config GPIO_ASPEED_SGPIOM_INIT_PRIORITY
+	int "Init priority"
+	depends on GPIO_ASPEED_SGPIOM
+	default 60
+	help
+	  Device driver initialization priority.

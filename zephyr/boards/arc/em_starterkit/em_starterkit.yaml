@@ -1,0 +1,15 @@
+identifier: em_starterkit
+name: EM Starterkit
+type: mcu
+arch: arc
+toolchain:
+  - zephyr
+  - xtools
+supported:
+  - i2c
+  - spi
+  - gpio
+testing:
+  ignore_tags:
+    - net
+    - bluetooth

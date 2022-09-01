@@ -1,0 +1,32 @@
+description: STM32 PWM
+
+compatible: "st,stm32-pwm"
+
+include: [pwm-controller.yaml, base.yaml]
+
+properties:
+    label:
+      required: true
+
+    st,prescaler:
+      type: int
+      required: true
+      description: Clock prescaler at the input of the timer
+
+    pinctrl-0:
+      type: phandles
+      required: false
+      description: |
+        GPIO pin configuration for PWM signal/s. We expect that the phandles
+        will reference pinctrl nodes, e.g.
+
+           pinctrl-0 = <&tim1_ch1_pwm_pa8 &tim1_ch2_pwm_pa9>;
+
+    "#pwm-cells":
+      const: 3
+
+pwm-cells:
+  - channel
+# period in terms of nanoseconds
+  - period
+  - flags

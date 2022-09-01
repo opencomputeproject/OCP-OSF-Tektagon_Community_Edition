@@ -1,0 +1,22 @@
+# Copyright (c) 2018 Synopsys, Inc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+if SOC_NSIM
+
+config SOC
+	default "snps_nsim"
+
+config UART_CONSOLE_ON_DEV_NAME
+	default "UART_0"
+
+config XIP
+	default n
+
+source "soc/arc/snps_nsim/Kconfig.defconfig.em"
+source "soc/arc/snps_nsim/Kconfig.defconfig.em7d_v22"
+source "soc/arc/snps_nsim/Kconfig.defconfig.sem"
+source "soc/arc/snps_nsim/Kconfig.defconfig.hs"
+source "soc/arc/snps_nsim/Kconfig.defconfig.hs_smp"
+source "soc/arc/snps_nsim/Kconfig.defconfig.hs6x"
+
+endif # SOC_NSIM

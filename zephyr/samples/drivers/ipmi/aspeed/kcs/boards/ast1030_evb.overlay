@@ -1,0 +1,19 @@
+&kcs1 {
+	status = "okay";
+	addr = <0xca0>;
+};
+
+&kcs2 {
+	status = "okay";
+	addr = <0xca8>;
+};
+
+&kcs3 {
+	status = "okay";
+	addr = <0xca2>;
+};
+
+&kcs4 {
+	status = "okay";
+	addr = <0xca4>;
+};

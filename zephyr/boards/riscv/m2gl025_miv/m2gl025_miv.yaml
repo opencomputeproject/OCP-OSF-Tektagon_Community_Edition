@@ -1,0 +1,12 @@
+identifier: m2gl025_miv
+name: Microsemi M2GL025 with MiV target
+type: mcu
+arch: riscv32
+toolchain:
+  - zephyr
+ram: 64
+simulation: renode
+testing:
+  ignore_tags:
+    - net
+    - bluetooth

@@ -1,0 +1,4 @@
+config AST1060
+	bool "Enable AST1060 Silicon layer"
+	help
+	  This option enables the Hierarchical State Machine library

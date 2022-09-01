@@ -1,0 +1,89 @@
+/*
+ * Copyright (c) 2018-2019 PHYTEC Messtechnik GmbH
+ * Copyright (c) 2017 Linaro Limited
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <nordic/nrf52840_qiaa.dtsi>
+#include "reel_board.dtsi"
+
+/ {
+	model = "reel board";
+	compatible = "phytec,reel_board";
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,uart-mcumgr = &uart0;
+		zephyr,bt-mon-uart = &uart0;
+		zephyr,bt-c2h-uart = &uart0;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		back_led: led_3 {
+			gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
+			label = "User D13 green";
+		};
+	};
+
+	pwmleds {
+		compatible = "pwm-leds";
+		back_pwm_led: pwm_led_3 {
+			pwms = <&pwm0 13>;
+		};
+	};
+
+	aliases {
+		led3 = &back_led;
+		pwm-led3 = &back_pwm_led;
+	};
+};
+
+&pwm0 {
+	ch0-inverted;
+};
+
+&spi1 {
+	compatible = "nordic,nrf-spi";
+	status = "okay";
+	sck-pin = <19>;
+	mosi-pin = <20>;
+	miso-pin = <21>;
+	cs-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>;
+
+	ssd16xxfb@0 {
+		compatible = "solomon,ssd16xxfb", "gooddisplay,gdeh0213b1";
+		label = "SSD16XX";
+		spi-max-frequency = <4000000>;
+		reg = <0>;
+		width = <250>;
+		height = <122>;
+		pp-width-bits = <8>;
+		pp-height-bits = <8>;
+		reset-gpios = <&gpio0 15 GPIO_ACTIVE_LOW>;
+		dc-gpios = <&gpio0 16 GPIO_ACTIVE_LOW>;
+		busy-gpios = <&gpio0 14 GPIO_ACTIVE_HIGH>;
+		gdv = [10 0a];
+		sdv = [19];
+		vcom = <0xa8>;
+		border-waveform = <0x71>;
+		lut-initial = [
+			22 55 AA 55 AA 55 AA 11
+			00 00 00 00 00 00 00 00
+			1E 1E 1E 1E 1E 1E 1E 1E
+			01 00 00 00 00
+		];
+		lut-default = [
+			18 00 00 00 00 00 00 00
+			00 00 00 00 00 00 00 00
+			0F 01 00 00 00 00 00 00
+			00 00 00 00 00
+		];
+	};
+};

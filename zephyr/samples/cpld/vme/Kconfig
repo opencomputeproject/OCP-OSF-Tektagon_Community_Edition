@@ -1,0 +1,14 @@
+# Private config options for vme sample app
+
+# Copyright (c) 2021 Aspeed
+# SPDX-License-Identifier: Apache-2.0
+
+mainmenu "JTAG vme sample application"
+
+config FIXED_VME_FILE
+	bool "Fixed vme file"
+	default n
+	help
+	  Use fied vme file as input.
+
+source "Kconfig.zephyr"

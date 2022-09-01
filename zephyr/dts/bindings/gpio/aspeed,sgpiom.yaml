@@ -1,0 +1,48 @@
+# Copyright (c) 2021 ASPEED
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED SGPIOM node
+
+compatible: "aspeed,sgpiom"
+
+include: [base.yaml, aspeed-pinctrl.yaml]
+
+properties:
+  aspeed,bus-freq:
+    type: int
+    default: 1000000
+    description:
+      SGPIO master clock frequency.
+  ngpios:
+    type: int
+    required: true
+
+child-binding:
+  description: GPIO child node
+  include: gpio-controller.yaml
+  properties:
+    label:
+      type: string
+      required: true
+
+    ngpios:
+      required: true
+
+    gpio-reserved:
+      type: int
+      required: false
+      description: |
+          specify which GPIOs are unusable.
+          If gpio 3, 4, 10 are reserved the value will be 0x418
+
+    pin-offset:
+      type: int
+      required: true
+      description: Pin offset of this GPIO entry
+
+    "#gpio-cells":
+      const: 2
+
+  gpio-cells:
+  - pin
+  - flags

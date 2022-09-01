@@ -1,0 +1,12 @@
+description: ASPEED family JTAG
+
+compatible: "aspeed,jtag"
+
+include: [base.yaml, aspeed-pinctrl.yaml]
+
+properties:
+    reg:
+      required: true
+
+    interrupts:
+      required: true

@@ -1,0 +1,1217 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Copyright (c) 2021 ASPEED Technology Inc.
+ */
+
+#include <arm/armv7-m.dtsi>
+#include <mem.h>
+#include <dt-bindings/i2c/i2c.h>
+#include <aspeed/ast10x0-irq.h>
+#include <dt-bindings/clock/ast10x0_clock.h>
+#include <dt-bindings/reset/ast10x0_reset.h>
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-m4f";
+			reg = <0>;
+		};
+	};
+
+	sram0: memory@0 {
+		compatible = "mmio-sram";
+	};
+
+	soc {
+		syscon: syscon@7e6e2000 {
+			reg = <0x7e6e2000 0x1000>;
+			sysclk: sysclk {
+				compatible = "aspeed,ast10x0-clk";
+				#clock-cells = <1>;
+				label = "SYSCLK";
+				adc_clk: adc_clk {
+					#clock-cells = <0>;
+					compatible = "fixed-factor-clock";
+					clocks = <&sysclk ASPEED_CLK_PCLK>;
+					clock-mult = <1>;
+					clock-div = <2>;
+					label = "ADC_CLK";
+				};
+			};
+
+			sysrst: sysrst {
+				compatible = "aspeed,aspeed-rst";
+				#reset-cells = <1>;
+				label = "SYSRST";
+			};
+			pinmux: pinmux {
+				compatible = "aspeed,pinmux";
+				label = "PINMUX";
+			};
+		};
+
+		adc0: adc@7e6e9000 {
+			compatible = "aspeed,adc";
+			reg = <0x7e6e9000 0x100>;
+			clocks = <&adc_clk>;
+			resets = <&sysrst ASPEED_RESET_ADC>;
+			interrupts = <46 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			#io-channel-cells = <1>;
+			aspeed,scu = <&syscon>;
+			aspeed,trim-data-locate = <0x5BC 0x3c000>;
+			label = "ADC0";
+			status = "disabled";
+		};
+
+		adc1: adc@7e6e9100 {
+			compatible = "aspeed,adc";
+			reg = <0x7e6e9100 0x100>;
+			clocks = <&adc_clk>;
+			resets = <&sysrst ASPEED_RESET_ADC>;
+			interrupts = <46 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			#io-channel-cells = <1>;
+			aspeed,scu = <&syscon>;
+			aspeed,trim-data-locate = <0x5D0 0xf00>;
+			label = "ADC1";
+			status = "disabled";
+		};
+
+		pwm_tach: pwm_tach@7e610000 {
+			reg = <0x7e610000 0x100>;
+			pwm: pwm {
+				compatible = "aspeed,pwm";
+				#pwm-cells = <3>;
+				npwms = <16>;
+				clocks = <&sysclk ASPEED_CLK_HCLK>;
+				resets = <&sysrst ASPEED_RESET_PWM_TACH>;
+				label = "PWM";
+				status = "disabled";
+			};
+			tach: tach {
+				compatible = "aspeed,tach";
+				#address-cells = <1>;
+				#size-cells = <0>;
+				clocks = <&sysclk ASPEED_CLK_HCLK>;
+				resets = <&sysrst ASPEED_RESET_PWM_TACH>;
+				interrupts = <44 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				label = "TACH";
+				status = "disabled";
+			};
+		};
+		gpio0: gpio@7e780000 {
+			compatible = "aspeed,gpio";
+			reg = <0x7e780000 0x400>;
+			interrupts = <11 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			gpio0_a_d: gpio0_a_d {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				gpio-reserved = <0>;
+				label = "GPIO0_A_D";
+				pin-offset = <0>;
+			};
+
+			gpio0_e_h: gpio0_e_h {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				gpio-reserved = <0>;
+				label = "GPIO0_E_H";
+				pin-offset = <32>;
+			};
+
+			gpio0_i_l: gpio0_i_l {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				gpio-reserved = <0>;
+				label = "GPIO0_I_L";
+				pin-offset = <64>;
+			};
+
+			gpio0_m_p: gpio0_m_p {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				gpio-reserved = <0xc0>;
+				label = "GPIO0_M_P";
+				pin-offset = <96>;
+			};
+
+			gpio0_q_t: gpio0_q_t {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				gpio-reserved = <0xf9f3e0>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "GPIO0_Q_T";
+				pin-offset = <128>;
+			};
+
+			gpio0_u_v: gpio0_u_v {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <8>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				gpio-reserved = <0>;
+				label = "GPIO0_U_V";
+				pin-offset = <160>;
+			};
+		};
+
+		sgpiom: sgpiom@7e780500 {
+			compatible = "aspeed,sgpiom";
+			reg = <0x7e780500 0x100>;
+			interrupts = <51 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			pinctrl-0 = <&pinctrl_sgpiom_default>;
+			ngpios = <128>;
+			status = "disabled";
+			sgpiom_a_d: sgpiom_a_d {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM_A_D";
+				pin-offset = <0>;
+			};
+
+			sgpiom_e_h: sgpiom_e_h {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM_E_H";
+				pin-offset = <32>;
+			};
+
+			sgpiom_i_l: sgpiom_i_l {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM_I_L";
+				pin-offset = <64>;
+			};
+
+			sgpiom_m_p: sgpiom_m_p {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM_M_P";
+				pin-offset = <96>;
+			};
+		};
+
+		peci: peci@7e78b000 {
+			compatible = "aspeed,peci";
+			reg = <0x7e78b000 0x100>;
+			interrupts = <38 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_HCLK>;
+			resets = <&sysrst ASPEED_RESET_PECI>;
+			label = "PECI";
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		jtag0: jtag@7e6e4000 {
+			compatible = "aspeed,jtag";
+			reg= <0x7e6e4000 0x20>;
+			interrupts = <27 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_HCLK>;
+			resets = <&sysrst ASPEED_RESET_JTAG_M0>;
+			label = "JTAG0";
+			pinctrl-0 = <&pinctrl_jtagm0_default>;
+			status = "disabled";
+		};
+
+		jtag1: jtag@7e6e4100 {
+			compatible = "aspeed,jtag";
+			reg= <0x7e6e4100 0x20>;
+			interrupts = <53 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_HCLK>;
+			resets = <&sysrst ASPEED_RESET_JTAG_M1>;
+			label = "JTAG1";
+			pinctrl-0 = <&pinctrl_jtagm1_default>;
+			status = "disabled";
+		};
+
+		timers: timers@7e782000 {
+			compatible = "aspeed,timers";
+			reg = <0x7e782000 0x100>;
+
+			timer0: timer0 {
+				compatible = "aspeed,timer";
+				interrupts = <16 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				clocks = <&sysclk ASPEED_CLK_PCLK>;
+				label = "TIMER0";
+				index = <0>;
+				status = "disabled";
+			};
+
+			timer1: timer1 {
+				compatible = "aspeed,timer";
+				interrupts = <17 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				clocks = <&sysclk ASPEED_CLK_PCLK>;
+				label = "TIMER1";
+				index = <1>;
+				status = "disabled";
+			};
+
+			timer2: timer2 {
+				compatible = "aspeed,timer";
+				interrupts = <18 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				clocks = <&sysclk ASPEED_CLK_PCLK>;
+				label = "TIMER2";
+				index = <2>;
+				status = "disabled";
+			};
+
+			timer3: timer3 {
+				compatible = "aspeed,timer";
+				interrupts = <19 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				clocks = <&sysclk ASPEED_CLK_PCLK>;
+				label = "TIMER3";
+				index = <3>;
+				status = "disabled";
+			};
+
+			timer4: timer4 {
+				compatible = "aspeed,timer";
+				interrupts = <20 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				clocks = <&sysclk ASPEED_CLK_PCLK>;
+				label = "TIMER4";
+				index = <4>;
+				status = "disabled";
+			};
+
+			timer5: timer5 {
+				compatible = "aspeed,timer";
+				interrupts = <21 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				clocks = <&sysclk ASPEED_CLK_PCLK>;
+				label = "TIMER5";
+				index = <5>;
+				status = "disabled";
+			};
+
+			timer6: timer6 {
+				compatible = "aspeed,timer";
+				interrupts = <22 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				clocks = <&sysclk ASPEED_CLK_PCLK>;
+				label = "TIMER6";
+				index = <6>;
+				status = "disabled";
+			};
+
+			timer7: timer7 {
+				compatible = "aspeed,timer";
+				interrupts = <23 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				clocks = <&sysclk ASPEED_CLK_PCLK>;
+				label = "TIMER7";
+				index = <7>;
+				status = "disabled";
+			};
+		};
+
+		uart1: serial@7e783000 {
+			compatible = "aspeed,uart";
+			reg = <0x7e783000 0x1000>;
+			interrupts = <INTR_UART1 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART1CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart1_default>;
+			label = "UART_1";
+		};
+
+		uart2: serial@7e78d000 {
+			compatible = "aspeed,uart";
+			reg = <0x7e78d000 0x100>;
+			interrupts = <INTR_UART2 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART2CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart2_default>;
+			label = "UART_2";
+		};
+
+		uart3: serial@7e78e000 {
+			compatible = "aspeed,uart";
+			reg = <0x7e78e000 0x100>;
+			interrupts = <INTR_UART3 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART3CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart3_default>;
+			label = "UART_3";
+		};
+
+		uart4: serial@7e78f000 {
+			compatible = "aspeed,uart";
+			reg = <0x7e78f000 0x100>;
+			interrupts = <INTR_UART4 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART4CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart4_default>;
+			label = "UART_4";
+		};
+
+		uart5: serial@7e784000 {
+			compatible = "ns16550";
+			reg = <0x7e784000 0x1000>;
+			interrupts = <INTR_UART5 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_UART5>;
+			status = "disabled";
+			label = "UART_5";
+		};
+
+		uart6: serial@7e790000 {
+			compatible = "aspeed,uart";
+			reg = <0x7e790000 0x100>;
+			interrupts = <INTR_UART6 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART6CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart6_default>;
+			label = "UART_6";
+		};
+
+		uart7: serial@7e790100 {
+			compatible = "aspeed,uart";
+			reg = <0x7e790100 0x100>;
+			interrupts = <INTR_UART7 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART7CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart7_default>;
+			label = "UART_7";
+		};
+
+		uart8: serial@7e790200 {
+			compatible = "aspeed,uart";
+			reg = <0x7e790200 0x100>;
+			interrupts = <INTR_UART8 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART8CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart8_default>;
+			label = "UART_8";
+		};
+
+		uart9: serial@7e790300 {
+			compatible = "aspeed,uart";
+			reg = <0x7e790300 0x100>;
+			interrupts = <INTR_UART9 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART9CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart9_default>;
+			label = "UART_9";
+		};
+
+		uart10: serial@7e790400 {
+			compatible = "aspeed,uart";
+			reg = <0x7e790400 0x100>;
+			interrupts = <INTR_UART10 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART10CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart10_default>;
+			label = "UART_10";
+		};
+
+		uart11: serial@7e790500 {
+			compatible = "aspeed,uart";
+			reg = <0x7e790500 0x100>;
+			interrupts = <INTR_UART11 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART11CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart11_default>;
+			label = "UART_11";
+		};
+
+		uart12: serial@7e790600 {
+			compatible = "aspeed,uart";
+			reg = <0x7e790600 0x100>;
+			interrupts = <INTR_UART12 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART12CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart12_default>;
+			label = "UART_12";
+		};
+
+		uart13: serial@7e790700 {
+			compatible = "aspeed,uart";
+			reg = <0x7e790700 0x100>;
+			interrupts = <INTR_UART13 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART13CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart13_default>;
+			label = "UART_13";
+		};
+
+		vuart1: serial@7e787000 {
+			compatible = "aspeed,uart";
+			reg = <0x7e787000 0x100>;
+			interrupts = <INTR_VUART1 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_APB1>;
+			virtual = <1>;
+			status = "disabled";
+			label = "VUART_1";
+		};
+
+		vuart2: serial@7e788000 {
+			compatible = "aspeed,uart";
+			reg = <0x7e788000 0x100>;
+			interrupts = <INTR_VUART2 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_APB1>;
+			virtual = <1>;
+			status = "disabled";
+			label = "VUART_2";
+		};
+
+		udma: udma@7e79e000 {
+			compatible = "aspeed,udma";
+			interrupts = <INTR_UARTDMA AST10X0_IRQ_DEFAULT_PRIORITY>;
+			reg = <0x7e79e000 0x1000>;
+		};
+
+		i2cfilter: i2c-filter@7e7b2000 {
+			compatible = "aspeed,i2c-filter";
+			reg = <0x7e7b2000 0x200>;
+			interrupts = <INTR_I2CFILTER AST10X0_IRQ_DEFAULT_PRIORITY>;
+			status = "disabled";
+			i2cfilter0: i2cfilter0 {
+				index = <0>;
+				clock = <100>;
+				label = "I2C_FILTER_0";
+			};
+			i2cfilter1: i2cfilter1 {
+				index = <1>;
+				clock = <100>;
+				label = "I2C_FILTER_1";
+			};
+			i2cfilter2: i2cfilter2 {
+				index = <2>;
+				clock = <100>;
+				label = "I2C_FILTER_2";
+			};
+			i2cfilter3: i2cfilter3 {
+				index = <3>;
+				clock = <100>;
+				label = "I2C_FILTER_3";
+			};
+			i2cfilter4: i2cfilter4 {
+				index = <4>;
+				clock = <100>;
+				label = "I2C_FILTER_4";
+			};
+		};
+
+		i2csp0: i2c-sp0@7e7b0780 {
+			compatible = "aspeed,i2c-snoop";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0780 0x80>;
+			label = "I2C_SP_0";
+			status = "disabled";
+		};
+
+		i2csp1: i2c-sp1@7e7b0800 {
+			compatible = "aspeed,i2c-snoop";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0800 0x80>;
+			label = "I2C_SP_1";
+			status = "disabled";
+		};
+
+		i2cmbx: i2c-mbx@7e7b3000 {
+			compatible = "aspeed,i2c-mbx";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b3000 0x100>;
+			interrupts = <INTR_I2CMBX AST10X0_IRQ_DEFAULT_PRIORITY>;
+			label = "I2C_MBX";
+			status = "disabled";
+		};
+
+		i2c_gr: i2c-global-regs@7e7b0000 {
+			compatible = "aspeed,i2c-global";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0000 0x20>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			resets = <&sysrst ASPEED_RESET_I2C>;
+			label = "I2C_GLOBAL";
+		};
+
+		i2c0: i2c@7e7b0080 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0080 0x80>;
+			interrupts = <INTR_I2C0 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_0";
+		};
+
+		i2c1: i2c@7e7b0100 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0100 0x80>;
+			interrupts = <INTR_I2C1 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_1";
+		};
+
+		i2c2: i2c@7e7b0180 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0180 0x80>;
+			interrupts = <INTR_I2C2 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_2";
+		};
+
+		i2c3: i2c@7e7b0200 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0200 0x80>;
+			interrupts = <INTR_I2C3 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_3";
+		};
+
+		i2c4: i2c@7e7b0280 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0280 0x80>;
+			interrupts = <INTR_I2C4 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_4";
+		};
+
+		i2c5: i2c@7e7b0300 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0300 0x80>;
+			interrupts = <INTR_I2C5 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_5";
+		};
+
+		i2c6: i2c@7e7b0380 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0380 0x80>;
+			interrupts = <INTR_I2C6 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_6";
+		};
+
+		i2c7: i2c@7e7b0400 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0400 0x80>;
+			interrupts = <INTR_I2C7 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_7";
+		};
+
+		i2c8: i2c@7e7b0480 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0480 0x80>;
+			interrupts = <INTR_I2C8 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_8";
+		};
+
+		i2c9: i2c@7e7b0500 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0500 0x80>;
+			interrupts = <INTR_I2C9 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_9";
+		};
+
+		i2c10: i2c@7e7b0580 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0580 0x80>;
+			interrupts = <INTR_I2C10 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_10";
+		};
+
+		i2c11: i2c@7e7b0600 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0600 0x80>;
+			interrupts = <INTR_I2C11 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_11";
+		};
+
+		i2c12: i2c@7e7b0680 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0680 0x80>;
+			interrupts = <INTR_I2C12 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_12";
+		};
+
+		i2c13: i2c@7e7b0700 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0700 0x80>;
+			interrupts = <INTR_I2C13 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_13";
+		};
+
+		i2c14: i2c@7e7b0780 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0780 0x80>;
+			interrupts = <INTR_I2C14 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_14";
+		};
+
+		i2c15: i2c@7e7b0800 {
+			compatible = "aspeed,i2c";
+			clock-frequency = <I2C_BITRATE_FAST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x7e7b0800 0x80>;
+			interrupts = <INTR_I2C15 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			status = "disabled";
+			label = "I2C_15";
+		};
+
+		espi: espi@7e6ee000 {
+			compatible = "aspeed,espi";
+			reg = <0x7e6ee000 0x800>;
+			interrupts = <INTR_ESPI AST10X0_IRQ_DEFAULT_PRIORITY>;
+			aspeed,scu = <&syscon>;
+			status = "disabled";
+			label = "ESPI";
+		};
+
+		udc: udc@7e6a2000 {
+			compatible = "aspeed,ast1030-udc";
+			reg = <0x7e6a2000 0x1000>;
+			interrupts = <INTR_USBDEV AST10X0_IRQ_DEFAULT_PRIORITY>;
+			num-bidir-endpoints = <5>;
+			resets = <&sysrst ASPEED_RESET_USB>;
+			label = "UDC";
+			status = "disabled";
+		};
+
+		lpc: lpc@7e789000 {
+			compatible = "aspeed,lpc";
+			reg = <0x7e789000 0x1000>;
+
+			kcs1: kcs1 {
+				compatible = "aspeed,kcs";
+				interrupts = <INTR_KCS1 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				chan = <1>;
+				label = "KCS1";
+				status = "disabled";
+			};
+
+			kcs2: kcs2 {
+				compatible = "aspeed,kcs";
+				interrupts = <INTR_KCS2 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				chan = <2>;
+				label = "KCS2";
+				status = "disabled";
+			};
+
+			kcs3: kcs3 {
+				compatible = "aspeed,kcs";
+				interrupts = <INTR_KCS3 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				chan = <3>;
+				label = "KCS3";
+				status = "disabled";
+			};
+
+			kcs4: kcs4 {
+				compatible = "aspeed,kcs";
+				interrupts = <INTR_KCS4 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				chan = <4>;
+				label = "KCS4";
+				status = "disabled";
+			};
+
+			bt: bt {
+				compatible = "aspeed,bt";
+				interrupts = <INTR_BT AST10X0_IRQ_DEFAULT_PRIORITY>;
+				label = "BT";
+				status = "disabled";
+			};
+
+			snoop: snoop {
+				compatible = "aspeed,snoop";
+				interrupts = <INTR_SNOOP AST10X0_IRQ_DEFAULT_PRIORITY>;
+				label = "SNOOP";
+				status = "disabled";
+			};
+
+			mbox: mbox {
+				compatible = "aspeed,mbox";
+				interrupts = <INTR_MBOX AST10X0_IRQ_DEFAULT_PRIORITY>;
+				label = "MBOX";
+				status = "disabled";
+			};
+
+			pcc: pcc {
+				compatible = "aspeed,pcc";
+				interrupts = <INTR_PCC AST10X0_IRQ_DEFAULT_PRIORITY>;
+				label = "PCC";
+				status = "disabled";
+			};
+		};
+
+		fmc: spi@7e620000 {
+			compatible = "aspeed,spi-controller";
+			reg = <0x7e620000 0xc4>, <0x80000000 0x10000000>;
+			reg-names = "ctrl_reg", "spi_mmap";
+			interrupts = <INTR_FMC AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_HCLK>;
+			pinctrl-0 = <&pinctrl_fmc_quad>;
+			num-cs = <2>;
+			ast-platform = <1030>;
+			ctrl-type = "bspi";
+			label = "FMC";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			spi-ctrl-caps-mask = <0x000e0e0c>;
+			status = "disabled";
+
+			fmc_cs0: flash@0 {
+				compatible = "jedec,spi-nor";
+				reg = <0>;
+				spi-max-buswidth = <1>;
+				spi-max-frequency = <25000000>;
+				jedec-id = [];
+				broken-sfdp;
+				size = <DT_SIZE_M(8)>;
+				label = "fmc_cs0";
+				write-block-size = <4096>;
+				status = "disabled";
+				partitions {
+					compatible = "fixed-partitions";
+					#address-cells = <1>;
+					#size-cells = <1>;
+					active_partition: partition@0 {
+						label = "active";
+						reg = <0x0 0x60000>;
+					};
+			
+					recovery_partition: partition@1 {
+						label = "recovery";
+						reg = <0x60000 0x60000>;
+					};
+			
+					state_partition: partition@2 {
+						label = "state";
+						reg = <0xC0000 0x10000>;
+					};
+			
+					intel_state_partition: partition@3 {
+						label = "intel_state";
+						reg = <0xD0000 0x10000>;
+					};
+			
+					key_partition: partition@4 {
+						label = "key";
+						reg = <0xE0000 0x10000>;
+					};
+			
+					log_partition: partition@5 {
+						label = "log";
+						reg = <0xF0000 0x20000>;
+					};
+				};
+			};
+
+			fmc_cs1: flash@1 {
+				compatible = "jedec,spi-nor";
+				reg = <1>;
+				spi-max-buswidth = <1>;
+				spi-max-frequency = <25000000>;
+				jedec-id = [];
+				label = "fmc_cs1";
+				status = "disabled";
+			};
+		};
+
+		spi1: spi@7e630000 {
+			compatible = "aspeed,spi-controller";
+			reg = <0x7e630000 0xc4>, <0x90000000 0x10000000>;
+			reg-names = "ctrl_reg", "spi_mmap";
+			interrupts = <INTR_SPI1 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_HCLK>;
+			pinctrl-0 = <&pinctrl_spi1_quad>;
+			num-cs = <2>;
+			ast-platform = <1030>;
+			ctrl-type = "hspi";
+			label = "SPI1";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			spi-ctrl-caps-mask = <0x000e0e0c>;
+			status = "disabled";
+
+			spi1_cs0: flash@0 {
+				compatible = "jedec,spi-nor";
+				reg = <0>;
+				spi-max-buswidth = <1>;
+				spi-max-frequency = <25000000>;
+				jedec-id = [];
+				label = "spi1_cs0";
+				status = "disabled";
+			};
+
+			spi1_cs1: flash@1 {
+				compatible = "jedec,spi-nor";
+				reg = <1>;
+				spi-max-buswidth = <1>;
+				spi-max-frequency = <25000000>;
+				jedec-id = [];
+				label = "spi1_cs1";
+				status = "disabled";
+			};
+		};
+
+		spi2: spi@7e640000 {
+			compatible = "aspeed,spi-controller";
+			reg = <0x7e640000 0xc4>, <0xb0000000 0x10000000>;
+			reg-names = "ctrl_reg", "spi_mmap";
+			interrupts = <INTR_SPI2 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_HCLK>;
+			pinctrl-0 = <&pinctrl_spi2_default
+						&pinctrl_spi2_cs1
+						&pinctrl_spi2_quad>;
+			num-cs = <2>;
+			ast-platform = <1030>;
+			ctrl-type = "nspi";
+			label = "SPI2";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			spi-ctrl-caps-mask = <0x000e0e0c>;
+			status = "disabled";
+
+			spi2_cs0: flash@0 {
+				compatible = "jedec,spi-nor";
+				reg = <0>;
+				spi-max-buswidth = <1>;
+				spi-max-frequency = <25000000>;
+				jedec-id = [];
+				label = "spi2_cs0";
+				status = "disabled";
+			};
+
+			spi2_cs1: flash@1 {
+				compatible = "jedec,spi-nor";
+				reg = <1>;
+				spi-max-buswidth = <1>;
+				spi-max-frequency = <25000000>;
+				jedec-id = [];
+				label = "spi2_cs1";
+				status = "disabled";
+			};
+
+			/* pseudo node */
+			spi2_cs2: flash@2 {
+				compatible = "jedec,spi-nor";
+				reg = <2>;
+				spi-max-buswidth = <4>;
+				spi-max-frequency = <50000000>;
+				jedec-id = [];
+				label = "spi2_cs2";
+				status = "disabled";
+			};
+
+			/* pseudo node */
+			spi2_cs3: flash@3 {
+				compatible = "jedec,spi-nor";
+				reg = <3>;
+				spi-max-buswidth = <4>;
+				spi-max-frequency = <50000000>;
+				jedec-id = [];
+				label = "spi2_cs3";
+				status = "disabled";
+			};
+		};
+
+		spim0: spi_monitor_common@7e791000 {
+			compatible = "aspeed,spi-monitor-controller";
+			reg = <0x7e791000 0x4000>;
+			aspeed,scu = <&syscon>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			label = "spi_m_common";
+			status = "disabled";
+
+			spim1: spi_monitor@1 {
+				interrupts = <INTR_SPIM1 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				reg = <1>;
+				label = "spi_m1";
+				allow-cmds = [];
+				read-forbidden-regions = <>;
+				write-forbidden-regions = <>;
+				status = "disabled";
+			};
+
+			spim2: spi_monitor@2 {
+				interrupts = <INTR_SPIM2 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				reg = <2>;
+				label = "spi_m2";
+				allow-cmds = [];
+				read-forbidden-regions = <>;
+				write-forbidden-regions = <>;
+				status = "disabled";
+			};
+
+			spim3: spi_monitor@3 {
+				interrupts = <INTR_SPIM3 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				reg = <3>;
+				label = "spi_m3";
+				allow-cmds = [];
+				read-forbidden-regions = <>;
+				write-forbidden-regions = <>;
+				status = "disabled";
+			};
+
+			spim4: spi_monitor@4 {
+				interrupts = <INTR_SPIM4 AST10X0_IRQ_DEFAULT_PRIORITY>;
+				reg = <4>;
+				label = "spi_m4";
+				allow-cmds = [];
+				read-forbidden-regions = <>;
+				write-forbidden-regions = <>;
+				status = "disabled";
+			};
+		};
+
+		wdt0: wdt_common@7e785000 {
+			compatible = "aspeed,ast-watchdog";
+			interrupts = <INTR_WDT AST10X0_IRQ_DEFAULT_PRIORITY>;
+			reg = <0x7e785000 0x200>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			label = "wdt0";
+			status = "disabled";
+
+			wdt1: wdt@1 {
+				reg = <1>;
+				aspeed,scu = <&syscon>;
+				reset-mask= <0x30f1ff1 0x03fffff1>;
+				label = "wdt1";
+				status = "disabled";
+			};
+
+			wdt2: wdt@2 {
+				reg = <2>;
+				aspeed,scu = <&syscon>;
+				reset-mask= <0x30f1ff1 0x03fffff1>;
+				label = "wdt2";
+				status = "disabled";
+			};
+
+			wdt3: wdt@3 {
+				reg = <3>;
+				aspeed,scu = <&syscon>;
+				reset-mask= <0x30f1ff1 0x03fffff1>;
+				label = "wdt3";
+				status = "disabled";
+			};
+
+			wdt4: wdt@4 {
+				reg = <4>;
+				aspeed,scu = <&syscon>;
+				reset-mask= <0x30f1ff1 0x03fffff1>;
+				label = "wdt4";
+				status = "disabled";
+			};
+		};
+
+		i3c: bus@7e7a0000 {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0 0x7e7a0000 0x8000>;
+		};
+
+		hace: hace@7e6d0000 {
+			compatible = "aspeed,hace";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			reg = <0x7e6d0000 0x200>;
+			clocks = <&sysclk ASPEED_CLK_GATE_YCLK>;
+			resets = <&sysrst ASPEED_RESET_HACE>;
+		};
+
+		rsa: rsa@7e6f2000 {
+			compatible = "aspeed,rsa";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			reg = <0x7e6f2000 0x100
+				   0x79000000 0x1800>;
+			clocks = <&sysclk ASPEED_CLK_GATE_RSACLK>;
+			label = "RSA";
+		};
+
+		ecdsa: ecdsa@7e6f2000 {
+			compatible = "aspeed,ecdsa";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			reg = <0x7e6f2000 0x100
+				   0x79000000 0x2400>;
+			label = "ECDSA";
+		};
+	};
+};
+
+#include "aspeed/ast10x0-pinctrl.dtsi"
+&nvic {
+	arm,num-irq-priority-bits = <3>;
+};
+
+&i3c {
+	i3c_gr: i3c-global-regs@0 {
+		compatible = "aspeed,i3c-global";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x0 0x100>;
+		resets = <&sysrst ASPEED_RESET_I3C>;
+		ni3cs = <4>;
+		status = "disabled";
+	};
+
+	i3c0: i3c0@2000 {
+		compatible = "aspeed,i3c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x2000 0x1000>;
+		interrupts = <102 0>;
+		resets = <&sysrst ASPEED_RESET_I3C0>;
+		clocks = <&sysclk ASPEED_CLK_GATE_I3C0CLK>;
+		i2c-scl-hz = <400000>;
+		i3c-scl-hz = <12500000>;
+		instance-id = <0>;
+		pinctrl-0 = <&pinctrl_hvi3c0_default>;
+		status = "disabled";
+		label = "I3C_0";
+	};
+
+	i3c1: i3c1@3000 {
+		compatible = "aspeed,i3c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x3000 0x1000>;
+		interrupts = <103 0>;
+		resets = <&sysrst ASPEED_RESET_I3C1>;
+		clocks = <&sysclk ASPEED_CLK_GATE_I3C1CLK>;
+		i2c-scl-hz = <400000>;
+		i3c-scl-hz = <12500000>;
+		instance-id = <1>;
+		pinctrl-0 = <&pinctrl_hvi3c1_default>;
+		status = "disabled";
+		label = "I3C_1";
+	};
+
+	i3c2: i3c2@4000 {
+		compatible = "aspeed,i3c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x4000 0x1000>;
+		interrupts = <104 0>;
+		resets = <&sysrst ASPEED_RESET_I3C2>;
+		clocks = <&sysclk ASPEED_CLK_GATE_I3C2CLK>;
+		i2c-scl-hz = <400000>;
+		i3c-scl-hz = <12500000>;
+		instance-id = <2>;
+		status = "disabled";
+		label = "I3C_2";
+	};
+
+	i3c3: i3c3@5000 {
+		compatible = "aspeed,i3c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x5000 0x1000>;
+		interrupts = <105 0>;
+		resets = <&sysrst ASPEED_RESET_I3C3>;
+		clocks = <&sysclk ASPEED_CLK_GATE_I3C3CLK>;
+		i2c-scl-hz = <400000>;
+		i3c-scl-hz = <12500000>;
+		instance-id = <3>;
+		status = "disabled";
+		label = "I3C_3";
+	};
+};

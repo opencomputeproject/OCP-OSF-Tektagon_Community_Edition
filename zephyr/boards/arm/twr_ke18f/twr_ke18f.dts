@@ -1,0 +1,315 @@
+/*
+ * Copyright (c) 2019-2021 Vestas Wind Systems A/S
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+#include <nxp/MKE18F512VLL16.dtsi>
+#include <dt-bindings/clock/kinetis_scg.h>
+#include <dt-bindings/pwm/pwm.h>
+
+/ {
+	model = "NXP Kinetis KE18 MCU Tower System Module";
+	compatible = "nxp,mke18f16", "nxp,ke18f", "nxp,ke1xf";
+
+	aliases {
+		led0 = &orange_led;
+		led1 = &yellow_led;
+		led2 = &green_led;
+		led3 = &red_led;
+		led4 = &tri_red_led;
+		led5 = &tri_green_led;
+		led6 = &tri_blue_led;
+		pwm-led0 = &orange_pwm_led;
+		pwm-led1 = &yellow_pwm_led;
+		pwm-led2 = &green_pwm_led;
+		pwm-led3 = &red_pwm_led;
+		red-pwm-led = &tri_red_pwm_led;
+		green-pwm-led = &tri_green_pwm_led;
+		blue-pwm-led = &tri_blue_pwm_led;
+		sw0 = &user_button_3;
+		sw1 = &user_button_2;
+	};
+
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+		zephyr,console = &lpuart0;
+		zephyr,shell-uart = &lpuart0;
+		zephyr,uart-pipe = &lpuart0;
+		zephyr,can-primary = &flexcan0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		orange_led: led_0 {
+			gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+			label = "User LED D9";
+		};
+		yellow_led: led_1 {
+			gpios = <&gpioc 12 GPIO_ACTIVE_LOW>;
+			label = "User LED D8";
+		};
+		green_led: led_2 {
+			gpios = <&gpioc 11 GPIO_ACTIVE_LOW>;
+			label = "User LED D7";
+		};
+		red_led: led_3 {
+			gpios = <&gpioc 10 GPIO_ACTIVE_LOW>;
+			label = "User LED D6";
+		};
+
+		tri_red_led: led_4 {
+			gpios = <&gpiod 16 GPIO_ACTIVE_LOW>;
+			label = "User Tricolor LED D5 (Red)";
+		};
+		tri_green_led: led_5 {
+			gpios = <&gpiod 15 GPIO_ACTIVE_LOW>;
+			label = "User Tricolor LED D5 (Green)";
+		};
+		tri_blue_led: led_6 {
+			gpios = <&gpiob 5 GPIO_ACTIVE_LOW>;
+			label = "User Tricolor LED D5 (Blue)";
+		};
+	};
+
+	pwmleds {
+		compatible = "pwm-leds";
+		orange_pwm_led: led_pwm_0 {
+			pwms = <&ftm3 7 60000 PWM_POLARITY_INVERTED>;
+			label = "User PWM LED D9";
+		};
+		yellow_pwm_led: led_pwm_1 {
+			pwms = <&ftm3 6 60000 PWM_POLARITY_INVERTED>;
+			label = "User PWM LED D8";
+		};
+		green_pwm_led: led_pwm_2 {
+			pwms = <&ftm3 5 60000 PWM_POLARITY_INVERTED>;
+			label = "User PWM LED D7";
+		};
+		red_pwm_led: led_pwm_3 {
+			pwms = <&ftm3 4 60000 PWM_POLARITY_INVERTED>;
+			label = "User PWM LED D6";
+		};
+
+		tri_red_pwm_led: led_pwm_4 {
+			pwms = <&ftm0 1 60000 PWM_POLARITY_INVERTED>;
+			label = "User Tricolor PWM LED D5 (Red)";
+		};
+		tri_green_pwm_led: led_pwm_5 {
+			pwms = <&ftm0 0 60000 PWM_POLARITY_INVERTED>;
+			label = "User Tricolor PWM LED D5 (Green)";
+		};
+		tri_blue_pwm_led: led_pwm_6 {
+			pwms = <&ftm0 5 60000 PWM_POLARITY_INVERTED>;
+			label = "User Tricolor PWM LED D5 (Blue)";
+		};
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		user_button_2: button_0 {
+			label = "User SW2";
+			gpios = <&gpiod 3 GPIO_ACTIVE_LOW>;
+		};
+		user_button_3: button_1 {
+			label = "User SW3";
+			gpios = <&gpiod 6 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&sim {
+	clkout-source = <1>;
+	clkout-divider = <0>;
+	pinctrl-0 = <&CLKOUT_PTE10>;
+};
+
+&scg {
+	sosc-mode = <KINETIS_SCG_SOSC_MODE_LOW_POWER>;
+
+	sosc_clk {
+		status = "okay";
+		clock-frequency = <8000000>;
+	};
+
+	pll {
+		clock-mult = <30>;
+	};
+
+	core_clk {
+		clocks = <&spll_clk>;
+	};
+
+	bus_clk {
+		clock-div = <2>;
+	};
+
+	slow_clk {
+		clock-div = <5>;
+	};
+
+	clkout_clk {
+		status = "okay";
+	};
+
+	splldiv1_clk {
+		clock-div = <1>;
+	};
+
+	splldiv2_clk {
+		clock-div = <2>;
+	};
+
+	sircdiv1_clk {
+		clock-div = <1>;
+	};
+
+	sircdiv2_clk {
+		clock-div = <2>;
+	};
+
+	fircdiv1_clk {
+		clock-div = <1>;
+	};
+
+	fircdiv2_clk {
+		clock-div = <1>;
+	};
+
+	soscdiv1_clk {
+		clock-div = <1>;
+	};
+
+	soscdiv2_clk {
+		clock-div = <1>;
+	};
+};
+
+&lpuart0 {
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&LPUART0_RX_PTB0 &LPUART0_TX_PTB1>;
+};
+
+&ftm0 {
+	status = "okay";
+	compatible = "nxp,kinetis-ftm-pwm";
+	#pwm-cells = <3>;
+	pinctrl-0 = <&FTM0_CH0_PTD15 &FTM0_CH1_PTD16 &FTM0_CH5_PTB5>;
+};
+
+&ftm3 {
+	status = "okay";
+	compatible = "nxp,kinetis-ftm-pwm";
+	#pwm-cells = <3>;
+	pinctrl-0 = <&FTM3_CH4_PTC10 &FTM3_CH5_PTC11
+		     &FTM3_CH6_PTC12 &FTM3_CH7_PTC13>;
+};
+
+&lpi2c0 {
+	status = "okay";
+	pinctrl-0 = <&LPI2C0_SDA_PTA2 &LPI2C0_SCL_PTA3>;
+
+	fxos8700: fxos8700@1d {
+		compatible = "nxp,fxos8700";
+		reg = <0x1d>;
+		label = "FXOS8700";
+		reset-gpios = <&gpioc 15 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&lpi2c1 {
+	status = "okay";
+	pinctrl-0 = <&LPI2C1_SDA_PTD8 &LPI2C1_SCL_PTD9>;
+};
+
+&lpspi0 {
+	status = "okay";
+	pinctrl-0 = <&LPSPI0_SCK_PTE0 &LPSPI0_SIN_PTE1
+		     &LPSPI0_SOUT_PTE2 &LPSPI0_PCS2_PTE6>;
+};
+
+&lpspi1 {
+	status = "okay";
+	pinctrl-0 = <&LPSPI1_SCK_PTD0 &LPSPI1_SIN_PTD1
+		     &LPSPI1_SOUT_PTD2 &LPSPI1_PCS0_PTD3>;
+};
+
+&dac0 {
+	status = "okay";
+	pinctrl-0 = <&DAC0_OUT_PTE9>;
+};
+
+&adc0 {
+	status = "okay";
+	sample-time = <12>;
+	pinctrl-0 = <&ADC0_SE0_PTA0 &ADC0_SE1_PTA1 &ADC0_SE12_PTC14>;
+};
+
+&temp0 {
+	status = "okay";
+};
+
+&flexcan0 {
+	status = "okay";
+	bus-speed = <125000>;
+	pinctrl-0 = <&CAN0_RX_PTE4 &CAN0_TX_PTE5>;
+};
+
+&gpioa {
+	status = "okay";
+};
+
+&gpiob {
+	status = "okay";
+};
+
+&gpioc {
+	status = "okay";
+};
+
+&gpiod {
+	status = "okay";
+};
+
+&gpioe {
+	status = "okay";
+};
+
+&edma {
+	status = "okay";
+};
+
+&flash0 {
+
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 0xc000>;
+		};
+		slot0_partition: partition@c000 {
+			label = "image-0";
+			reg = <0x0000c000 0x32000>;
+		};
+		slot1_partition: partition@3e000 {
+			label = "image-1";
+			reg = <0x0003e000 0x32000>;
+		};
+		scratch_partition: partition@70000 {
+			label = "image-scratch";
+			reg = <0x00070000 0xa000>;
+		};
+		storage_partition: partition@7a000 {
+			label = "storage";
+			reg = <0x0007a000 0x00006000>;
+		};
+	};
+};

@@ -1,0 +1,89 @@
+/*
+ * Copyright (c) 2019 Lexmark International, Inc.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <mem.h>
+#include <arm/armv7-r.dtsi>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+/ {
+	soc {
+		flash0: flash@c0000000 {
+			compatible = "soc-nv-flash";
+			reg = <0xc0000000 DT_SIZE_M(32)>;
+		};
+
+		sram0: memory@0 {
+			compatible = "mmio-sram";
+			reg = <0 DT_SIZE_M(64)>;
+		};
+
+		uart0: uart@ff000000 {
+			compatible = "xlnx,xuartps";
+			reg = <0xff000000 0x4c>;
+			status = "disabled";
+			interrupts = <GIC_SPI 21 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>;
+			interrupt-names = "irq_0";
+			label = "UART_0";
+		};
+
+		ttc0: timer@ff110000 {
+			compatible = "xlnx,ttcps";
+			status = "disabled";
+			interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>,
+				     <GIC_SPI 37 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>,
+				     <GIC_SPI 38 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>;
+			interrupt-names = "irq_0", "irq_1", "irq_2";
+			reg = <0xff110000 0x1000>;
+			label = "ttc0";
+		};
+
+		ttc1: timer@ff120000 {
+			compatible = "xlnx,ttcps";
+			status = "disabled";
+			interrupts = <GIC_SPI 39 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>,
+				     <GIC_SPI 40 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>,
+				     <GIC_SPI 41 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>;
+			interrupt-names = "irq_0", "irq_1", "irq_2";
+			reg = <0xff120000 0x1000>;
+			label = "ttc1";
+		};
+
+		ttc2: timer@ff130000 {
+			compatible = "xlnx,ttcps";
+			status = "disabled";
+			interrupts = <GIC_SPI 42 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>,
+				     <GIC_SPI 43 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>,
+				     <GIC_SPI 44 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>;
+			interrupt-names = "irq_0", "irq_1", "irq_2";
+			reg = <0xff130000 0x1000>;
+			label = "ttc2";
+		};
+
+		ttc3: timer@ff140000 {
+			compatible = "xlnx,ttcps";
+			status = "disabled";
+			interrupts = <GIC_SPI 45 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>,
+				     <GIC_SPI 46 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>,
+				     <GIC_SPI 47 IRQ_TYPE_LEVEL
+					IRQ_DEFAULT_PRIORITY>;
+			interrupt-names = "irq_0", "irq_1", "irq_2";
+			reg = <0xff140000 0x1000>;
+			label = "ttc3";
+		};
+	};
+};

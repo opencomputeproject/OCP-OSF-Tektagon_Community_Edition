@@ -1,0 +1,16 @@
+identifier: native_posix
+name: Native 32-bit POSIX port
+type: native
+arch: posix
+toolchain:
+  - zephyr
+  - llvm
+supported:
+  - eeprom
+  - netif:eth
+  - usb_device
+  - adc
+  - i2c
+  - spi
+testing:
+  default: true

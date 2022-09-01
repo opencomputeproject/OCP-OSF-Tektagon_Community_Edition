@@ -1,0 +1,10 @@
+# Atmel SAM TRNG configuration
+
+# Copyright (c) 2019 Aurelien Jarno
+# SPDX-License-Identifier: Apache-2.0
+
+config PWM_SAM
+	bool "Atmel SAM MCU Family PWM Driver"
+	depends on SOC_FAMILY_SAM
+	help
+	  Enable PWM driver for Atmel SAM MCUs.

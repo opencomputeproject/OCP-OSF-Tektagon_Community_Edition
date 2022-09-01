@@ -1,0 +1,61 @@
+# Copyright (c) 2021, ASPEED 
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED tachometer controller
+
+compatible: "aspeed,tach"
+
+include: [tach.yaml, aspeed-pinctrl.yaml]
+
+
+child-binding:
+    description: Tachometer child node
+    properties:
+      reg:
+        type: int
+        required: true
+        description: |
+          The Fan tach input channel.
+          Integer value in the range 0 through 15.
+
+      pulse-pr:
+          type: int
+          required: false
+          default: 2
+          description: |
+            Define the tachometer pulses per fan revolution as an integer. 
+            The value must be greater than zero.
+
+      min-rpm:
+          type: int
+          required: false
+          default: 1000
+          description: |
+            Define the minimal revolutions per minute of the measure fan
+            used to calculate the sample period of tach.
+
+      tach-mode:
+        type: int
+        required: false
+        default: 0
+        enum:
+          - 0
+          - 1
+          - 2
+        description: |
+          Define the tach sampling mode.
+          0: falling-to-falling
+          1: rising-to-rising
+          2: both edges
+
+      tach-div:
+          type: int
+          required: false
+          default: 5
+          description: |
+            Define the tachometer clock divider.
+            Formula of tach clock = Clock source / (2^tach-div)^2
+
+      label:
+        type: string
+        required: true

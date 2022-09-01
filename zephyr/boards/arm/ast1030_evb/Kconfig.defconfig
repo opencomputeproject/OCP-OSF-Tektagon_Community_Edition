@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Aspeed BIC AST1030 board configuration
+#
+# Copyright (c) 2021 ASPEED Technology Inc.
+
+if BOARD_AST1030_EVB
+config BOARD
+	default "ast1030_evb"
+endif # BOARD_AST1030_EVB
+
+if BOARD_AST1030_FT
+config BOARD
+	default "ast1030_ft"
+endif # BOARD_AST1030_EVB
+

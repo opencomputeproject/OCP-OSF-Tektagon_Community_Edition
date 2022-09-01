@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_HIFIVE1
+
+config BOARD
+	default "hifive1"
+
+config SYS_CLOCK_TICKS_PER_SEC
+	default 128
+
+config PWM_SIFIVE
+	default y
+	depends on PWM
+
+endif

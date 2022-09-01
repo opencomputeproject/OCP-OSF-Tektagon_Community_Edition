@@ -1,0 +1,10 @@
+# I2C Filter configuration options
+
+# Copyright (c) 2021 Aspeed Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config I2C_PFR_SNOOP
+	bool "I2C PFR Snoop driver"
+	default n
+	help
+	  Enable I2C PFR Snoop driver

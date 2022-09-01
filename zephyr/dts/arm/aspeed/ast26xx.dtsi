@@ -1,0 +1,362 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Copyright (c) 2021 ASPEED Technology Inc.
+ */
+
+#include <arm/armv7-m.dtsi>
+#include <mem.h>
+#include <dt-bindings/i2c/i2c.h>
+#include <aspeed/ast10x0-irq.h>
+#include <dt-bindings/clock/ast26xx_clock.h>
+#include <dt-bindings/reset/ast26xx_reset.h>
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-m3";
+			reg = <0>;
+		};
+	};
+
+	sdram0: memory@0 {
+		device_type = "memory";
+	};
+
+	flash0: flash@20000000 {
+		compatible = "serial-flash";
+		label = "FLASH_ASPEED";
+		erase-block-size = <4096>;
+		write-block-size = <1>;
+	};
+
+	soc {
+		syscon: syscon@7e6e2000 {
+			reg = <0x7e6e2000 0x1000>;
+			sysclk: sysclk {
+				compatible = "aspeed,ast26xx-clk";
+				#clock-cells = <1>;
+				label = "SYSCLK";
+			};
+
+			sysrst: sysrst {
+				compatible = "aspeed,aspeed-rst";
+				#reset-cells = <1>;
+				label = "SYSRST";
+			};
+			pinmux: pinmux {
+				compatible = "aspeed,pinmux";
+				label = "PINMUX";
+			};
+		};
+
+		gpio0: gpio@7e780000 {
+			compatible = "aspeed,gpio";
+			reg = <0x7e780000 0x400>;
+			interrupts = <72 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			gpio0_a_d: gpio0_a_d {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				aspeed,cmd-src = <2>;
+				label = "GPIO0_A_D";
+				pin-offset = <0>;
+			};
+
+			gpio0_e_h: gpio0_e_h {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				aspeed,cmd-src = <2>;
+				label = "GPIO0_E_H";
+				pin-offset = <32>;
+			};
+
+			gpio0_i_l: gpio0_i_l {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				aspeed,cmd-src = <2>;
+				label = "GPIO0_I_L";
+				pin-offset = <64>;
+			};
+
+			gpio0_m_p: gpio0_m_p {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				aspeed,cmd-src = <2>;
+				label = "GPIO0_M_P";
+				pin-offset = <96>;
+			};
+
+			gpio0_q_t: gpio0_q_t {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				aspeed,cmd-src = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "GPIO0_Q_T";
+				pin-offset = <128>;
+			};
+
+			gpio0_u_x: gpio0_u_x {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				aspeed,cmd-src = <2>;
+				label = "GPIO0_U_X";
+				pin-offset = <160>;
+			};
+
+			gpio0_y_z: gpio0_y_z {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <16>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				aspeed,cmd-src = <2>;
+				label = "GPIO0_Y_Z";
+				pin-offset = <192>;
+			};
+		};
+
+		sgpiom0: sgpiom@7e780500 {
+			compatible = "aspeed,sgpiom";
+			reg = <0x7e780500 0x100>;
+			interrupts = <51 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			pinctrl-0 = <&pinctrl_sgpiom0_default>;
+			ngpios = <128>;
+			status = "disabled";
+			sgpiom0_a_d: sgpiom0_a_d {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM0_A_D";
+				pin-offset = <0>;
+			};
+
+			sgpiom0_e_h: sgpiom0_e_h {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM0_E_H";
+				pin-offset = <32>;
+			};
+
+			sgpiom0_i_l: sgpiom0_i_l {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM0_I_L";
+				pin-offset = <64>;
+			};
+
+			sgpiom0_m_p: sgpiom0_m_p {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM0_M_P";
+				pin-offset = <96>;
+			};
+		};
+
+		sgpiom1: sgpiom@7e780600 {
+			compatible = "aspeed,sgpiom";
+			reg = <0x7e780600 0x100>;
+			interrupts = <70 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_PCLK>;
+			pinctrl-0 = <&pinctrl_sgpiom1_default>;
+			ngpios = <80>;
+			status = "disabled";
+			sgpiom1_a_d: sgpiom0_a_d {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM1_A_D";
+				pin-offset = <0>;
+			};
+
+			sgpiom1_e_h: sgpiom0_e_h {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <32>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM1_E_H";
+				pin-offset = <32>;
+			};
+
+			sgpiom1_i_l: sgpiom0_i_l {
+				#gpio-cells = <2>;
+				gpio-controller;
+				ngpios = <16>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				label = "SGPIOM1_I_L";
+				pin-offset = <64>;
+			};
+		};
+
+		uart11: serial@7e790500 {
+			compatible = "aspeed,uart";
+			reg = <0x7e790500 0x100>;
+			interrupts = <INTR_UART11 AST10X0_IRQ_DEFAULT_PRIORITY>;
+			clocks = <&sysclk ASPEED_CLK_GATE_UART11CLK>;
+			status = "disabled";
+			pinctrl-0 = <&pinctrl_uart11_default>;
+			label = "UART_11";
+		};
+
+		udma: udma@7e79e000 {
+			compatible = "aspeed,udma";
+			interrupts = <INTR_UARTDMA AST10X0_IRQ_DEFAULT_PRIORITY>;
+			reg = <0x7e79e000 0x1000>;
+		};
+
+		i3c: bus@7e7a0000 {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0 0x7e7a0000 0x8000>;
+		};
+	};
+};
+#include "aspeed/ast26xx-pinctrl.dtsi"
+&nvic {
+	arm,num-irq-priority-bits = <3>;
+};
+
+&i3c {
+	i3c_gr: i3c-global-regs@0 {
+		compatible = "aspeed,i3c-global";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x0 0x100>;
+		resets = <&sysrst ASPEED_RESET_I3C>;
+		ni3cs = <6>;
+		status = "disabled";
+	};
+
+	i3c0: i3c0@2000 {
+		compatible = "aspeed,i3c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x2000 0x1000>;
+		interrupts = <102 0>;
+		resets = <&sysrst ASPEED_RESET_I3C0>;
+		clocks = <&sysclk ASPEED_CLK_GATE_I3C0CLK>;
+		i2c-scl-hz = <400000>;
+		i3c-scl-hz = <12500000>;
+		instance-id = <0>;
+		pinctrl-0 = <&pinctrl_i3c0_default>;
+		status = "disabled";
+		label = "I3C_0";
+	};
+
+	i3c1: i3c1@3000 {
+		compatible = "aspeed,i3c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x3000 0x1000>;
+		interrupts = <103 0>;
+		resets = <&sysrst ASPEED_RESET_I3C1>;
+		clocks = <&sysclk ASPEED_CLK_GATE_I3C1CLK>;
+		i2c-scl-hz = <400000>;
+		i3c-scl-hz = <12500000>;
+		instance-id = <1>;
+		pinctrl-0 = <&pinctrl_i3c1_default>;
+		status = "disabled";
+		label = "I3C_1";
+	};
+
+	i3c2: i3c2@4000 {
+		compatible = "aspeed,i3c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x4000 0x1000>;
+		interrupts = <104 0>;
+		resets = <&sysrst ASPEED_RESET_I3C2>;
+		clocks = <&sysclk ASPEED_CLK_GATE_I3C2CLK>;
+		i2c-scl-hz = <400000>;
+		i3c-scl-hz = <12500000>;
+		instance-id = <2>;
+		status = "disabled";
+		label = "I3C_2";
+	};
+
+	i3c3: i3c3@5000 {
+		compatible = "aspeed,i3c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x5000 0x1000>;
+		interrupts = <105 0>;
+		resets = <&sysrst ASPEED_RESET_I3C3>;
+		clocks = <&sysclk ASPEED_CLK_GATE_I3C3CLK>;
+		i2c-scl-hz = <400000>;
+		i3c-scl-hz = <12500000>;
+		instance-id = <3>;
+		status = "disabled";
+		label = "I3C_3";
+	};
+
+	i3c4: i3c4@6000 {
+		compatible = "aspeed,i3c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x6000 0x1000>;
+		interrupts = <106 0>;
+		resets = <&sysrst ASPEED_RESET_I3C4>;
+		clocks = <&sysclk ASPEED_CLK_GATE_I3C4CLK>;
+		i2c-scl-hz = <400000>;
+		i3c-scl-hz = <12500000>;
+		instance-id = <4>;
+		pinctrl-0 = <&pinctrl_hvi3c4_default>;
+		status = "disabled";
+		label = "I3C_4";
+	};
+
+	i3c5: i3c5@7000 {
+		compatible = "aspeed,i3c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x7000 0x1000>;
+		interrupts = <107 0>;
+		resets = <&sysrst ASPEED_RESET_I3C5>;
+		clocks = <&sysclk ASPEED_CLK_GATE_I3C5CLK>;
+		i2c-scl-hz = <400000>;
+		i3c-scl-hz = <12500000>;
+		instance-id = <5>;
+		pinctrl-0 = <&pinctrl_hvi3c5_default>;
+		status = "disabled";
+		label = "I3C_5";
+	};
+};

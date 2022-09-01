@@ -1,0 +1,26 @@
+# RESET controller driver configuration options
+
+# Copyright (c) 2021 ASPEED
+# SPDX-License-Identifier: Apache-2.0
+
+#
+# RESET controller drivers
+#
+menuconfig RESET_CONTROL
+	bool "Hardware reset controller support"
+	help
+	  Enable support for hardware reset controller. Such hardware can
+	  provide reset for other subsystem, and thus can be also used for
+	  power efficiency by controlling their reset. Note that this has
+	  nothing to do with RTC.
+
+if RESET_CONTROL
+
+module = RESET_CONTROL
+module-str = reset control
+source "subsys/logging/Kconfig.template.log_config"
+
+source "drivers/reset_control/Kconfig.aspeed"
+
+
+endif # RESET_CONTROL

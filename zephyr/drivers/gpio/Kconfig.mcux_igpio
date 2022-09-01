@@ -1,0 +1,10 @@
+# MCUX IGPIO configuration options
+
+# Copyright (c) 2017, NXP
+# SPDX-License-Identifier: Apache-2.0
+
+config GPIO_MCUX_IGPIO
+	bool "MCUX IGPIO driver"
+	depends on HAS_MCUX_IGPIO
+	help
+	  Enable the MCUX IGPIO driver.

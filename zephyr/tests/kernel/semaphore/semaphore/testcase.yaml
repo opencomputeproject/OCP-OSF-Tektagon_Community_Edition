@@ -1,0 +1,3 @@
+tests:
+  kernel.semaphore:
+    tags: kernel userspace ignore_faults

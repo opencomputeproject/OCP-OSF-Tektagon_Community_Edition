@@ -1,0 +1,10 @@
+# ASPEED WDT controller driver
+
+# Copyright (c) 2021 ASPEED Technology Inc. <chin-ting_kuo@aspeedtech.com>
+# SPDX-License-Identifier: Apache-2.0
+
+config WDT_ASPEED
+	bool "ASPEED WDT Driver"
+	default n
+	help
+	  Enable ASPEED WDT controller driver.

@@ -1,0 +1,23 @@
+# Copyright (c) 2021, ASPEED 
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED PWM
+
+compatible: "aspeed,pwm"
+
+include: [pwm-controller.yaml, base.yaml, aspeed-pinctrl.yaml]
+
+properties:
+    npwms:
+      type: int
+      required: true
+      description: PWM channel numbers
+
+    "#pwm-cells":
+      const: 3
+
+pwm-cells:
+  - channel
+# period in terms of nanoseconds
+  - period
+  - flag

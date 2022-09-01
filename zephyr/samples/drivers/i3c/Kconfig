@@ -1,0 +1,27 @@
+# Private config options for i3c sample app
+
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+mainmenu "I3C driver sample application"
+
+config I3C_SAMPLE_LOOPBACK
+	bool "i3c0 & i3c1 loopback"
+	default n
+	help
+	  This sample demonstrates the i3c loopback.  Where i3c0 plays the role as the main master
+	  and i3c1 plays the role as the slave.
+
+config I3C_SAMPLE_IMX3102
+	bool "access imx3102"
+	default n
+	help
+	  This sample demonstrates the accesses to the slave device IMX3102.
+
+config I3C_SAMPLE_IMX3112
+	bool "access imx/iml3112"
+	default n
+	help
+	  This sample demonstrates the accesses to the slave device IMX/IML3112.
+
+source "Kconfig.zephyr"

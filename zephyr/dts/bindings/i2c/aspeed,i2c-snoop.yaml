@@ -1,0 +1,19 @@
+#
+# Copyright (c) ASPEED
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+description: ASPEED I2C Snoop controller
+
+compatible: "aspeed,i2c-snoop"
+
+include: [base.yaml, aspeed-pinctrl.yaml]
+
+properties:
+    reg:
+      required: true
+
+
+
+

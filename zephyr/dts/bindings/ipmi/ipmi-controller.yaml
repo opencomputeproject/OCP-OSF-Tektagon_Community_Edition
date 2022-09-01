@@ -1,0 +1,10 @@
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+# Common fields for IPMI devices
+
+include: base.yaml
+
+properties:
+    label:
+      required: true

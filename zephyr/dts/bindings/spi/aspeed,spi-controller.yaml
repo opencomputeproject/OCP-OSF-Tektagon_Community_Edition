@@ -1,0 +1,89 @@
+# Copyright (c) 2021 Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED FMC_SPI controller node
+
+compatible: "aspeed,spi-controller"
+
+include: [spi-controller.yaml, aspeed-pinctrl.yaml, flash-controller.yaml]
+
+properties:
+  reg:
+    required: true
+
+  reg-names:
+    required: true
+
+  clocks:
+    required: true
+
+  num-cs:
+    type: int
+    required: true
+    description: |
+      Number of chip select supported by current controller
+
+  ast-platform:
+    type: int
+    required: true
+    description: |
+      Used to distinguish different Aspeed platforms
+    enum:
+      - 2600
+      - 2620
+      - 2605
+      - 2625
+      - 1030
+      - 1060
+
+  ctrl-type:
+    type: string
+    required: true
+    description: |
+      Distinguish the controller auxiliary type.
+
+      There are three types for a Aspeed SPI controller:
+      boot SPI flash controller (bspi),
+      host SPI flash controller (hspi)
+      and normal SPI flash controller (nspi).
+
+    enum:
+      - "bspi"
+      - "hspi"
+      - "nspi"
+
+  spi-ctrl-caps-mask:
+    type: int
+    required: false
+    description: |
+      SPI flash controller mode/protocol capability configuration.
+
+      bit 0 : disable 1-1-1
+      bit 1 : disable 1-1-1 (fast read)
+      bit 8 : disable 1-1-2
+      bit 9 : disable 1-2-2
+      bit 10: disable 2-2-2
+      bit 16: disable 1-1-4
+      bit 17: disable 1-4-4
+      bit 18: disable 4-4-4
+
+  internal-mux-master:
+    type: int
+    required: false
+    description: |
+      Select the SPI master by the internal MUX.
+
+  spi-monitor-output-base:
+    type: int
+    required: false
+    description: |
+      The base CS offset of the first flash under
+      current controller.
+
+  spi-monitor-common-ctrl:
+    type: phandle
+    required: false
+    description: |
+      phandle to SPI monitor common device node which
+      includes general control register.
+

@@ -1,0 +1,11 @@
+Features:
+  - feature:
+    name: BareMetal Wrapper
+    macro: BAREMETAL_WRAPPER_SUPPORT
+    description: Switch to enable Baremetal Wrapper
+    enable: Yes
+  - feature:
+    name: TE_OE WRAPPER
+    macro: TE_OE_WRAPPER_SUPPORT
+    description: Switch to enable TE_OE Wrapper
+    enable: No

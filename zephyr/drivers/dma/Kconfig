@@ -1,0 +1,41 @@
+# DMA configuration options
+
+# Copyright (c) 2016 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+#
+# DMA options
+#
+menuconfig DMA
+	bool "DMA driver Configuration"
+
+if DMA
+config DMA_64BIT
+	bool "DMA 64 bit address support"
+	help
+	  When this option is true, 64 bit source and dest
+	  DMA addresses are supported.
+
+module = DMA
+module-str = dma
+source "subsys/logging/Kconfig.template.log_config"
+
+source "drivers/dma/Kconfig.stm32"
+
+source "drivers/dma/Kconfig.sam_xdmac"
+
+source "drivers/dma/Kconfig.dw"
+
+source "drivers/dma/Kconfig.nios2_msgdma"
+
+source "drivers/dma/Kconfig.sam0"
+
+source "drivers/dma/Kconfig.mcux_edma"
+
+source "drivers/dma/Kconfig.mcux_lpc"
+
+source "drivers/dma/Kconfig.dma_pl330"
+
+source "drivers/dma/Kconfig.iproc_pax"
+
+endif # DMA

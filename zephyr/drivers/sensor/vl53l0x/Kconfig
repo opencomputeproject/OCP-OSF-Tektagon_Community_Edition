@@ -1,0 +1,18 @@
+# VL53L0X time of flight sensor configuration options
+
+# Copyright (c) 2017 STMicroelectronics
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig VL53L0X
+	bool "VL53L0X time of flight sensor"
+	depends on I2C
+	select HAS_STLIB
+	help
+	  Enable driver for VL53L0X I2C-based time of flight sensor.
+
+config VL53L0X_PROXIMITY_THRESHOLD
+	int "Proximity threshold in millimeters"
+	default 100
+	depends on VL53L0X
+	help
+	  Threshold used for proximity detection when sensor is used with SENSOR_CHAN_PROX.

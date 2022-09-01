@@ -1,0 +1,14 @@
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config CLOCK_CONTROL_AST26XX
+	bool "ASPEED clock control"
+	depends on SOC_SERIES_AST26XX
+	help
+	  This option enables ASPEED clock control driver.
+
+config CLOCK_CONTROL_AST10X0
+	bool "ASPEED clock control"
+	depends on SOC_SERIES_AST10X0
+	help
+	  This option enables ASPEED clock control driver.

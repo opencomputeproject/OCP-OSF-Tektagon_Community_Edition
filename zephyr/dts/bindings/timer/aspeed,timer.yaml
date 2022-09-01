@@ -1,0 +1,21 @@
+# Copyright (c) 2021, Aspeed Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+description: Aspeed, General purpose timer
+
+compatible: "aspeed,timer"
+
+include: base.yaml
+
+properties:
+    interrupts:
+        required: true
+
+    clocks:
+        type: phandle-array
+        required: true
+
+    index:
+      type: int
+      required: true
+      description: specify the HW index

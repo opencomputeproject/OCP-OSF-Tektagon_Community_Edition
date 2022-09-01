@@ -1,0 +1,31 @@
+# STM32F746G DISCOVERY board configuration
+
+# Copyright (c) 2018 Yurii Hamann
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_STM32F746G_DISCO
+
+config BOARD
+	default "stm32f746g_disco"
+
+if NETWORKING
+
+config NET_L2_ETHERNET
+	default y
+
+endif # NETWORKING
+
+config I2C
+	default y if KSCAN
+
+if KSCAN
+
+config KSCAN_FT5336
+	default y
+
+config KSCAN_INIT_PRIORITY
+	default 65
+
+endif # KSCAN
+
+endif # BOARD_STM32F746G_DISCO

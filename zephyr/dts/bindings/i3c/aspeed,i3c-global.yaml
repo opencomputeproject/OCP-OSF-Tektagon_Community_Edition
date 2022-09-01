@@ -1,0 +1,20 @@
+#
+# Copyright (c) ASPEED
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+description: ASPEED I3C Global controller
+
+compatible: "aspeed,i3c-global"
+
+include: base.yaml
+
+properties:
+    ni3cs:
+      type: int
+      required: true
+    pull-up-resistor-ohm:
+      type: array
+      default: [2000]
+      required: false

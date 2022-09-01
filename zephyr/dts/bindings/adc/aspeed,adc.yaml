@@ -1,0 +1,38 @@
+description: ASPEED family ADC
+
+compatible: "aspeed,adc"
+
+include: [adc-controller.yaml, aspeed-pinctrl.yaml]
+
+properties:
+    reg:
+      required: true
+
+    interrupts:
+      required: true
+
+    ref-voltage-mv:
+          type: int
+          description: |
+            Reference voltage in millivolts for the conversions
+    aspeed,scu:
+      type: phandle
+      required: true
+      description: phandle to SCU device tree node
+
+    aspeed,trim-data-valid:
+      type: boolean
+      description: |
+        If true, the trim data from OTP used to calibrate the internal reference voltage is valid.
+
+    aspeed,trim-data-locate:
+      type: array
+      description: |
+        Locate the SCU offset and bit mask that the trimming data is loaded into from OTP.
+        [SCU_offset bit_mask]
+
+    "#io-channel-cells":
+      const: 1
+
+io-channel-cells:
+    - input

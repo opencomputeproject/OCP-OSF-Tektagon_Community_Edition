@@ -1,0 +1,12 @@
+# Atmel SAM SPI
+
+# Copyright (c) 2019 Gerson Fernando Budke
+# Copyright (c) 2018 qianfan Zhao
+# SPDX-License-Identifier: Apache-2.0
+
+config SPI_SAM
+	bool "Atmel SAM series SPI driver"
+	default y
+	depends on SOC_FAMILY_SAM
+	help
+	  Enable support for the SAM SPI driver.

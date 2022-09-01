@@ -1,0 +1,141 @@
+# Serial driver configuration options
+
+# Copyright (c) 2014-2015 Wind River Systems, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig SERIAL
+	bool "Serial Drivers"
+	help
+	  Enable options for serial drivers.
+
+if SERIAL
+
+comment "Capabilities"
+
+config SERIAL_HAS_DRIVER
+	bool
+	help
+	  This is an option to be enabled by individual serial driver
+	  to signal that there is a serial driver. This is being used
+	  by other drivers which are dependent on serial.
+
+config SERIAL_SUPPORT_ASYNC
+	bool
+	help
+	  This is an option to be enabled by individual serial driver
+	  to signal that the driver and hardware supports async operation.
+
+config SERIAL_SUPPORT_INTERRUPT
+	bool
+	help
+	  This is an option to be enabled by individual serial driver
+	  to signal that the driver and hardware supports interrupts.
+
+config UART_ASYNC_API
+	bool "Enable new asynchronous UART API [EXPERIMENTAL]"
+	depends on SERIAL_SUPPORT_ASYNC
+	help
+	  This option enables new asynchronous UART API.
+
+config UART_INTERRUPT_DRIVEN
+	bool "Enable UART Interrupt support"
+	depends on SERIAL_SUPPORT_INTERRUPT
+	help
+	  This option enables interrupt support for UART allowing console
+	  input and other UART based drivers.
+
+config UART_LINE_CTRL
+	bool "Enable Serial Line Control API"
+	help
+	  This enables the API for apps to control the serial line,
+	  such as baud rate, CTS and RTS.
+
+	  Implementation is up to individual driver.
+
+	  Says no if not sure.
+
+config UART_DRV_CMD
+	bool "Enable driver commands API"
+	help
+	  This enables the API to send extra commands to drivers.
+	  This allows drivers to expose hardware specific functions.
+
+	  Says no if not sure.
+
+comment "Serial Drivers"
+
+source "drivers/serial/Kconfig.ns16550"
+
+source "drivers/serial/Kconfig.mcux"
+
+source "drivers/serial/Kconfig.mcux_flexcomm"
+
+source "drivers/serial/Kconfig.mcux_iuart"
+
+source "drivers/serial/Kconfig.mcux_lpsci"
+
+source "drivers/serial/Kconfig.mcux_lpuart"
+
+source "drivers/serial/Kconfig.miv"
+
+source "drivers/serial/Kconfig.imx"
+
+source "drivers/serial/Kconfig.stellaris"
+
+source "drivers/serial/Kconfig.native_posix"
+
+source "drivers/serial/Kconfig.usart_sam"
+
+source "drivers/serial/Kconfig.uart_sam"
+
+source "drivers/serial/Kconfig.stm32"
+
+source "drivers/serial/Kconfig.nrfx"
+
+source "drivers/serial/Kconfig.altera_jtag"
+
+source "drivers/serial/Kconfig.cc13xx_cc26xx"
+
+source "drivers/serial/Kconfig.cc32xx"
+
+source "drivers/serial/Kconfig.cmsdk_apb"
+
+source "drivers/serial/Kconfig.sifive"
+
+source "drivers/serial/Kconfig.esp32"
+
+source "drivers/serial/Kconfig.gecko"
+
+source "drivers/serial/Kconfig.leuart_gecko"
+
+source "drivers/serial/Kconfig.msp432p4xx"
+
+source "drivers/serial/Kconfig.nuvoton"
+
+source "drivers/serial/Kconfig.sam0"
+
+source "drivers/serial/Kconfig.psoc6"
+
+source "drivers/serial/Kconfig.pl011"
+
+source "drivers/serial/Kconfig.rv32m1_lpuart"
+
+source "drivers/serial/Kconfig.litex"
+
+source "drivers/serial/Kconfig.rtt"
+
+source "drivers/serial/Kconfig.xlnx"
+
+source "drivers/serial/Kconfig.xmc4xxx"
+
+source "drivers/serial/Kconfig.lpc11u6x"
+
+source "drivers/serial/Kconfig.npcx"
+
+source "drivers/serial/Kconfig.apbuart"
+
+source "drivers/serial/Kconfig.aspeed"
+
+source "drivers/serial/Kconfig.rcar"
+
+endif # SERIAL

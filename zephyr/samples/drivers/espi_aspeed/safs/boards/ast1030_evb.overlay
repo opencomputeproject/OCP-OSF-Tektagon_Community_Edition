@@ -1,0 +1,6 @@
+&espi {
+	status = "okay";
+	perif,memcyc-src-addr = <0x98000000>;
+	perif,memcyc-size = <0x10000>;
+	flash,safs-mode = <0x1>;
+};

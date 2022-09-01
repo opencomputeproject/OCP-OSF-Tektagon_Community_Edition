@@ -1,0 +1,12 @@
+sample:
+  description: JTAG CPLD upgrade with VME file
+  name: JTAG VME Demo
+common:
+    harness: vme
+    tags: vme
+    integration_platforms:
+        - ast1030_evb
+tests:
+  sample.cpld.vme.fixed_vme:
+    extra_args: OVERLAY_CONFIG="overlay-fixed-vme.conf"
+    platform_allow: ast1030_evb

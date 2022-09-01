@@ -1,0 +1,82 @@
+# SPI driver configuration options
+
+# Copyright (c) 2015-2016 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+#
+# SPI Drivers
+#
+menuconfig SPI
+	bool "SPI hardware bus support"
+	help
+	  Enable support for the SPI hardware bus.
+
+if SPI
+
+config SPI_ASYNC
+	bool "Enable Asynchronous call support"
+	select POLL
+	help
+	  This option enables the asynchronous API calls.
+
+config SPI_SLAVE
+	bool "Enable Slave support [EXPERIMENTAL]"
+	help
+	  Enables Driver SPI slave operations. Slave support depends
+	  on the driver and the hardware it runs on.
+
+config SPI_INIT_PRIORITY
+	int "Init priority"
+	default 70
+	help
+	  Device driver initialization priority.
+
+module = SPI
+module-str = spi
+source "subsys/logging/Kconfig.template.log_config"
+
+source "drivers/spi/Kconfig.stm32"
+
+source "drivers/spi/Kconfig.dw"
+
+source "drivers/spi/Kconfig.mcux_dspi"
+
+source "drivers/spi/Kconfig.mcux_flexcomm"
+
+source "drivers/spi/Kconfig.mcux_lpspi"
+
+source "drivers/spi/Kconfig.rv32m1_lpspi"
+
+source "drivers/spi/Kconfig.sam"
+
+source "drivers/spi/Kconfig.sam0"
+
+source "drivers/spi/Kconfig.sifive"
+
+source "drivers/spi/Kconfig.spi_emul"
+
+source "drivers/spi/Kconfig.nrfx"
+
+source "drivers/spi/Kconfig.cc13xx_cc26xx"
+
+source "drivers/spi/Kconfig.litex"
+
+source "drivers/spi/Kconfig.oc_simple"
+
+source "drivers/spi/Kconfig.xec_qmspi"
+
+source "drivers/spi/Kconfig.gecko"
+
+source "drivers/spi/Kconfig.xlnx"
+
+source "drivers/spi/Kconfig.esp32"
+
+source "drivers/spi/Kconfig.test"
+
+source "drivers/spi/Kconfig.psoc6"
+
+source "drivers/spi/Kconfig.aspeed"
+
+source "drivers/spi/Kconfig.spi_monitor_aspeed"
+
+endif # SPI

@@ -1,0 +1,71 @@
+# Copyright (c) 2021 ASPEED
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED GPIO node
+
+compatible: "aspeed,gpio"
+
+include: [base.yaml, aspeed-pinctrl.yaml]
+
+properties:
+  aspeed,deb-interval-us:
+    type: int
+    default: 5
+    description:
+      Debounce inverval when pin configure with GPIO_INT_DEBOUNCE. (unit is us)
+
+child-binding:
+  description: GPIO child node
+  include: gpio-controller.yaml
+  properties:
+    label:
+      type: string
+      required: true
+
+    ngpios:
+      required: true
+
+    gpio-reserved:
+      type: int
+      required: false
+      description: |
+          specify which GPIOs are unusable. 
+          If gpio 3, 4, 10 are reserved the value will be 0x418
+    
+    pin-offset:
+      type: int
+      required: true
+      description: Pin offset of this GPIO entry
+
+    "#gpio-cells":
+      const: 2
+
+    aspeed,cmd-src:
+      type: int
+      default: 0
+      required: false
+      enum:
+        - 0 # ARM
+        - 1 # LPC
+        - 2 # SSP
+      description: Select the master to control the gpio device.
+
+    aspeed,group-dedicated:
+      type: int
+      default: 15
+      required: false
+      description: |
+        Dedicated gpio group for select master, each group include 8 gpios
+        BIT0~BIT3 => GROUP0~GROUP3.
+
+    aspeed,persist-maps:
+      type: int
+      default: 0
+      required: false
+      description: |
+        Retain gpio pin state across the wdt reset. Each bit represents each
+        gpio pin. Use 1 to enable persistent, 0 to disable persistent.
+
+  gpio-cells:
+  - pin
+  - flags

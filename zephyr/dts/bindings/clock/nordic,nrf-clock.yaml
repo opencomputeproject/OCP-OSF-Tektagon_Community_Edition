@@ -1,0 +1,18 @@
+# Copyright (c) 2018 Nordic Semiconductor ASA
+# SPDX-License-Identifier: Apache-2.0
+
+description: Nordic nRF clock control node
+
+compatible: "nordic,nrf-clock"
+
+include: base.yaml
+
+properties:
+    label:
+      required: true
+
+    reg:
+      required: true
+
+    interrupts:
+      required: true

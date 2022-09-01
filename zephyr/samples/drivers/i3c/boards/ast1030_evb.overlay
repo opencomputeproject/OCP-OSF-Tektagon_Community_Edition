@@ -1,0 +1,32 @@
+&i3c_gr {
+	status = "okay";
+	pull-up-resistor-ohm = <2000>, <2000>, <2000>, <2000>;
+};
+
+&i3c0 {
+	status = "okay";
+	assigned-address = <0x8>;
+};
+
+#if 0
+&i3c1 {
+	status = "okay";
+};
+
+&i3c2 {
+	status = "okay";
+	pinctrl-0 = <&pinctrl_i3c2_default>;
+};
+
+&i3c3 {
+	status = "okay";
+	pinctrl-0 = <&pinctrl_i3c3_default>;
+};
+
+&i3c4 {
+	status = "okay";
+};
+&i3c5 {
+	status = "okay";
+};
+#endif

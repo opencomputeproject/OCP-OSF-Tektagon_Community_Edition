@@ -1,0 +1,14 @@
+&i3c1 {
+	status = "okay";
+	assigned-address = <0x9>;
+	secondary;
+	i3c1_smq:i3c-slave-mqueue@9 {
+		compatible = "aspeed,i3c-slave-mqueue";
+		reg = <0x9>;
+		msg-size = <256>;
+		num-of-msgs = <4>;
+		mandatory-data-byte = <0xbf>;
+		label = "I3C_1_SMQ";
+		status = "okay";
+	};
+};

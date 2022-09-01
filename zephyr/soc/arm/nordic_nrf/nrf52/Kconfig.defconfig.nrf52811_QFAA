@@ -1,0 +1,20 @@
+# Nordic Semiconductor nRF52811 MCU
+
+# Copyright (c) 2019 Nordic Semiconductor ASA
+# SPDX-License-Identifier: Apache-2.0
+
+if SOC_NRF52811_QFAA
+
+config SOC
+	default "nRF52811_QFAA"
+
+config NUM_IRQS
+	default 30
+
+config NET_CONFIG_IEEE802154_DEV_NAME
+	default IEEE802154_NRF5_DRV_NAME
+
+config IEEE802154_NRF5
+	default IEEE802154
+
+endif # SOC_NRF52811_QFAA

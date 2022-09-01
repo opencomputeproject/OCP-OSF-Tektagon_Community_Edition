@@ -1,0 +1,37 @@
+# iMX7 M4 core series
+
+# Copyright (c) 2017, NXP
+# SPDX-License-Identifier: Apache-2.0
+
+if SOC_MCIMX7_M4
+
+config SOC
+	default "mcimx7d"
+
+config SYS_CLOCK_HW_CYCLES_PER_SEC
+	default 200000000
+
+config GPIO
+	default y
+
+config GPIO_IMX
+	default y
+	depends on GPIO
+
+config UART_IMX
+	default y
+	depends on SERIAL
+
+config I2C_IMX
+	default y
+	depends on I2C
+
+config PWM_IMX
+	default y
+	depends on PWM
+
+config IPM_IMX
+	default y
+	depends on IPM
+
+endif # SOC_MCIMX7_M4

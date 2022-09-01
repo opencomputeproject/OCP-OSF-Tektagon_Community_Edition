@@ -1,0 +1,20 @@
+# USB configuration options
+
+# Copyright (c) 2016 Wind River Systems, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig USB
+	bool "USB"
+	help
+	  Enable USB drivers.
+
+if SHELL && USB
+
+config SHELL_CMDS_USB
+	bool "Enable USB shell commands"
+	help
+	  Enable usb shell commands to test driver.
+
+endif # SHELL && USB
+
+source "drivers/usb/device/Kconfig"

@@ -1,0 +1,29 @@
+# Copyright (c) 2016 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig LOG
+	bool "Logging"
+	select PRINTK if USERSPACE
+	help
+	  Global switch for the logger, when turned off log calls will not be
+	  compiled in.
+
+if LOG
+
+rsource "Kconfig.mode"
+
+rsource "Kconfig.filtering"
+
+if !LOG_FRONTEND && !LOG_MINIMAL
+
+rsource "Kconfig.formatting"
+
+rsource "Kconfig.processing"
+
+rsource "Kconfig.backends"
+
+endif # !LOG_FRONTEND && !LOG_MINIMAL
+
+rsource "Kconfig.misc"
+
+endif # LOG

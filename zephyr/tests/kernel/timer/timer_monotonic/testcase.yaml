@@ -1,0 +1,3 @@
+tests:
+  kernel.timer.monotonic:
+    tags: kernel timer

@@ -1,0 +1,11 @@
+#
+# Copyright (c) ASPEED
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+description: ASPEED I2C Global controller
+
+compatible: "aspeed,i2c-global"
+
+include: base.yaml

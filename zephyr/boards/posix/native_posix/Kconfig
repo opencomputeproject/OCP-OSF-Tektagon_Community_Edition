@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_NATIVE_POSIX
+	bool
+	select NATIVE_POSIX_TIMER
+	select NATIVE_POSIX_CONSOLE
+
+if BOARD_NATIVE_POSIX
+
+comment "Native POSIX options"
+
+config NATIVE_POSIX_SLOWDOWN_TO_REAL_TIME
+	bool "Slow down execution to real time"
+	default y if BT_USERCHAN || !TEST
+	help
+	  When selected the execution of the process will be slowed down to real time.
+	  (if there is a lot of load it may be slower than real time)
+	  If deselected, the process will run as fast as possible.
+	  Note that this only decouples simulated time from real/wall time. In either
+	  case the zephyr kernel and application cannot tell the difference unless they
+	  interact with some other driver/device which runs at real time.
+
+config HAS_SDL
+	bool
+	help
+	  This option specifies that the target board has SDL support
+
+endif

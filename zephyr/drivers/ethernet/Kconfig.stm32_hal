@@ -1,0 +1,91 @@
+# STM32 HAL Ethernet driver configuration options
+
+# Copyright (c) 2017 Erwin Rol <erwin@erwinrol.com>
+# Copyright (c) 2020 Alexander Kozhinov <AlexanderKozhinov@yandex.com>
+# SPDX-License-Identifier: Apache-2.0
+
+DT_COMPAT_ST_STM32_ETHERNET := st,stm32-ethernet
+
+menuconfig ETH_STM32_HAL
+	bool "STM32 HAL Ethernet driver"
+	default y if $(dt_compat_enabled,$(DT_COMPAT_ST_STM32_ETHERNET))
+	select USE_STM32_HAL_ETH
+	select NOCACHE_MEMORY if SOC_SERIES_STM32H7X && CPU_CORTEX_M7
+	help
+	  Enable STM32 HAL based Ethernet driver. It is available for
+	  all Ethernet enabled variants of the F2, F4, F7 and H7 series.
+
+if ETH_STM32_HAL
+
+config ETH_STM32_HAL_RX_THREAD_STACK_SIZE
+	int "RX thread stack size"
+	default 1500
+	help
+	  RX thread stack size
+
+config ETH_STM32_HAL_RX_THREAD_PRIO
+	int "RX thread priority"
+	default 2
+	help
+	  RX thread priority
+
+config ETH_STM32_HAL_USE_DTCM_FOR_DMA_BUFFER
+	bool "Use DTCM for DMA buffers"
+	default y
+	depends on SOC_SERIES_STM32F7X
+	help
+	  When this option is activated, the buffers for DMA transfer are
+	  moved from SRAM to the DTCM (Data Tightly Coupled Memory).
+
+config ETH_STM32_HAL_PHY_ADDRESS
+	int "Phy address"
+	default 0
+	help
+	  The phy address to use.
+
+config ETH_STM32_HAL_RANDOM_MAC
+	bool "Random MAC address"
+	depends on ENTROPY_GENERATOR
+	default y
+	help
+	  Generate a random MAC address dynamically.
+
+if !ETH_STM32_HAL_RANDOM_MAC
+
+config ETH_STM32_HAL_MAC3
+	hex "MAC Address Byte 3"
+	default 0
+	range 0 0xff
+	help
+	  This is the byte 3 of the MAC address.
+
+config ETH_STM32_HAL_MAC4
+	hex "MAC Address Byte 4"
+	default 0
+	range 0 0xff
+	help
+	  This is the byte 4 of the MAC address.
+
+config ETH_STM32_HAL_MAC5
+	hex "MAC Address Byte 5"
+	default 0
+	range 0 0xff
+	help
+	  This is the byte 5 of the MAC address.
+
+endif # !ETH_STM32_HAL_RANDOM_MAC
+
+config ETH_STM32_HAL_MII
+	bool "Use MII interface"
+	help
+	  Use the MII physical interface instead of RMII.
+
+config ETH_STM32_CARRIER_CHECK_RX_IDLE_TIMEOUT_MS
+	int "Carrier check timeout period (ms)"
+	default 500
+	range 100 30000
+	help
+	  Set the RX idle timeout period in milliseconds after which the
+	  PHY's carrier status is re-evaluated.
+
+endif # ETH_STM32_HAL

@@ -1,0 +1,25 @@
+# Copyright (c) 2017 I-SENSE group of ICCS
+# SPDX-License-Identifier: Apache-2.0
+
+description: STM32 I2C V1 controller
+
+compatible: "st,stm32-i2c-v1"
+
+include: i2c-controller.yaml
+
+properties:
+    reg:
+      required: true
+
+    interrupts:
+      required: true
+
+    pinctrl-0:
+      type: phandles
+      required: false
+      description: |
+        GPIO pin configuration for serial signals (SDA, SCL).  We expect
+        that the phandles will reference pinctrl nodes.
+
+        For example the I2C1 would be
+           pinctrl-0 = <&i2c1_sda_pb11 &i2c1_scl_pb10>;

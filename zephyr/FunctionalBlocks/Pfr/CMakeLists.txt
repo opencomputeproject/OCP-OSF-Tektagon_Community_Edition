@@ -1,0 +1,2 @@
+add_subdirectory_ifdef(CONFIG_INTEL_PFR_SUPPORT intel_2.0)
+add_subdirectory_ifdef(CONFIG_CERBERUS_PFR_SUPPORT cerberus)

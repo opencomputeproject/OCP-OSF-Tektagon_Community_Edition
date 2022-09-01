@@ -1,0 +1,17 @@
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config PECI_ASPEED
+	bool "ASPEED PECI driver"
+	depends on SOC_FAMILY_ASPEED
+	help
+	  Enable the ASPEED PECI IO driver.
+
+config PECI_ASPEED_INTERRUPT_DRIVEN
+	bool "ASPEED PECI driver interrupt support"
+	default y
+	depends on CMSIS_RTOS_V2
+	depends on PECI_ASPEED
+	help
+	  This is an option to be enabled by individual peci driver
+	  to indicate that the driver and hardware supports interrupts.

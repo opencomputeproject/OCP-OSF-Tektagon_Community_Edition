@@ -1,0 +1,28 @@
+# mcux entropy generator driver configuration
+
+# Copyright (c) 2016 ARM Ltd.
+# SPDX-License-Identifier: Apache-2.0
+
+config ENTROPY_MCUX_RNGA
+	bool "MCUX RNGA driver"
+	depends on HAS_MCUX_RNGA
+	select ENTROPY_HAS_DRIVER
+	help
+	  This option enables the random number generator accelerator (RNGA)
+	  driver based on the MCUX RNGA driver.
+
+config ENTROPY_MCUX_TRNG
+	bool "MCUX TRNG driver"
+	depends on HAS_MCUX_TRNG
+	select ENTROPY_HAS_DRIVER
+	help
+	  This option enables the true random number generator (TRNG)
+	  driver based on the MCUX TRNG driver.
+
+config ENTROPY_MCUX_RNG
+	bool "MCUX RNG driver"
+	depends on HAS_MCUX_RNG
+	select ENTROPY_HAS_DRIVER
+	help
+	  This option enables the true random number generator (TRNG)
+	  driver based on the MCUX RNG driver on LPC Family.

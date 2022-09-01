@@ -1,0 +1,12 @@
+# ASPEED TACH driver configuration options
+
+# Copyright (c) 2021 ASPEED
+# SPDX-License-Identifier: Apache-2.0
+
+config TACH_ASPEED
+	bool "ASPEED TACH driver"
+	depends on SOC_FAMILY_ASPEED
+	help
+	  This option enables the TACH driver for ASPEED family of
+	  processors.
+	  Say y if you wish to use TACH channels on ASPEED MCU.

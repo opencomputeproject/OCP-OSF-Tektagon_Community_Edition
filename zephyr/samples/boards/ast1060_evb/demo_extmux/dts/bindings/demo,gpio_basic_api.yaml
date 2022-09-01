@@ -1,0 +1,29 @@
+#
+# Copyright (c) 2019 Nordic Semiconductor ASA
+# Copyright (c) 2021 ASPEED Technology Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+description: |
+    This binding provides resources required to build and run the
+    samples/ast1060_evb/demo in Zephyr.
+
+compatible: "demo,gpio_basic_api"
+
+properties:
+    out-gpios:
+        type: phandle-array
+        required: false
+        description: |
+          Identity of a GPIO that will be configured as an output.  This
+          must be on the same device as in-gpios, and physically
+          connected to in-gpios.
+
+    in-gpios:
+        type: phandle-array
+        required: false
+        description: |
+          Identity of a GPIO that will be configured as an input.  This
+          must be on the same device as out-gpios,and physically
+          connected to out-gpios.

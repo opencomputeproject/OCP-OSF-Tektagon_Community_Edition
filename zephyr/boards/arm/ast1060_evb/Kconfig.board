@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Aspeed BIC AST1060 board configuration
+#
+# Copyright (c) 2021 ASPEED Technology Inc.
+
+config BOARD_AST1060_EVB
+	bool "ASPEED AST1060 Evaluation Board"
+	depends on SOC_AST1060
+

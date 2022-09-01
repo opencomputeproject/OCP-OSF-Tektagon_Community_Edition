@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (c) 2021 ASPEED Technology Inc.
+
+config SOC_SERIES_AST26XX
+	bool "Aspeed AST26XX Series"
+	select ARM
+	select CPU_CORTEX_M3
+	select CORTEX_M_SYSTICK
+	select SOC_FAMILY_ASPEED
+	select CACHE
+	select CACHE_MANAGEMENT
+	help
+	  Enable support for ASPEED AST26XX series

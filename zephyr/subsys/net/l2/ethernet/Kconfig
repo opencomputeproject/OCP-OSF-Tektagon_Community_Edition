@@ -1,0 +1,79 @@
+# Copyright (c) 2018 Intel Corporation.
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig NET_L2_ETHERNET
+	bool "Enable Ethernet support"
+	help
+	  Add support for Ethernet, enabling selecting relevant hardware drivers.
+	  If NET_SLIP_TAP is selected, NET_L2_ETHERNET will enable to fully
+	  simulate Ethernet through SLIP.
+
+if NET_L2_ETHERNET
+
+module = NET_L2_ETHERNET
+module-dep = NET_LOG
+module-str = Log level for Ethernet L2 layer
+module-help = Enables Ethernet L2 to output debug messages.
+source "subsys/net/Kconfig.template.log_config.net"
+
+config NET_L2_ETHERNET_MGMT
+	bool "Enable Ethernet network management interface"
+	select NET_MGMT
+	select NET_MGMT_EVENT
+	help
+	  Enable support net_mgmt Ethernet interface which can be used to
+	  configure at run-time Ethernet drivers and L2 settings.
+
+config NET_VLAN
+	bool "Enable virtual lan support"
+	help
+	  Enables virtual lan (VLAN) support for Ethernet.
+
+config NET_VLAN_COUNT
+	int "Max VLAN tags supported in the system"
+	default 1
+	range 1 255
+	depends on NET_VLAN
+	help
+	  How many VLAN tags can be configured.
+
+config NET_ARP
+	bool "Enable ARP"
+	default y
+	depends on NET_IPV4
+	help
+	  Enable ARP support. This is necessary on hardware that requires it to
+	  get IPv4 working (like Ethernet devices).
+
+config NET_ARP_TABLE_SIZE
+	int "Number of entries in ARP table."
+	depends on NET_ARP
+	default 2
+	help
+	  Each entry in the ARP table consumes 22 bytes of memory.
+
+config NET_ARP_GRATUITOUS
+	bool "Support gratuitous ARP requests/replies."
+	depends on NET_ARP
+	default y
+	help
+	  Gratuitous in this case means a ARP request or reply that is not
+	  normally needed according to the ARP specification but could be used
+	  in some cases. A gratuitous ARP request is a ARP request packet where
+	  the source and destination IP are both set to the IP of the machine
+	  issuing the packet and the destination MAC is the broadcast address
+	  ff:ff:ff:ff:ff:ff. Ordinarily, no reply packet will occur.
+	  A gratuitous ARP reply is a reply to which no request has been made.
+
+if NET_ARP
+module = NET_ARP
+module-dep = NET_LOG
+module-str = Log level for IPv4 ARP
+module-help = Enables core ARP code to output debug messages.
+source "subsys/net/Kconfig.template.log_config.net"
+endif # NET_ARP
+
+source "subsys/net/l2/ethernet/gptp/Kconfig"
+source "subsys/net/l2/ethernet/lldp/Kconfig"
+
+endif # NET_L2_ETHERNET

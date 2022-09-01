@@ -1,0 +1,10 @@
+# Copyright (c) 2021 ASPEED Technology Inc. <chin-ting_kuo@aspeedtech.com>
+# SPDX-License-Identifier: Apache-2.0
+
+config WDT_DEMO_ASPEED
+	default n
+	bool "ASPEED WDT demo"
+	help
+	  Enable ASPEED WDT demo behaviors.
+
+source "Kconfig.zephyr"

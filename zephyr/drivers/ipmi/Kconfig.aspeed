@@ -1,0 +1,20 @@
+# ASPEED IPMI driver configuration options
+
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config IPMI_KCS_ASPEED
+	bool "ASPEED IPMI KCS driver"
+	depends on SOC_FAMILY_ASPEED
+	help
+	  This option enables the KCS BMC driver for ASPEED
+	  SoCs.
+	  Say y if you wish to use KCS channels on ASPEED MCU.
+
+config IPMI_BT_ASPEED
+	bool "ASPEED IPMI BT driver"
+	depends on SOC_FAMILY_ASPEED
+	help
+	  This option enables the BT BMC driver for ASPEED
+	  SoCs.
+	  Say y if you wish to use BT channels on ASPEED MCU.

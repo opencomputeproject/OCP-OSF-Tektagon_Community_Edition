@@ -1,0 +1,11 @@
+Features:
+  - feature:
+    name: Baremetal Unit Testing
+    macro: BAREMETAL_UNITTEST_SUPPORT
+    description: Switch to enable Baremetal Unit Test support
+    enable: Yes
+  - feature:
+    name: Tektagaon-OE Unit Testing
+    macro: TE_OE_UNITTEST_SUPPORT
+    description: Switch to enable TE-OE Unit Test support
+    enable: No

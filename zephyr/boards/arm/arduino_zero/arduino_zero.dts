@@ -1,0 +1,116 @@
+/*
+ * Copyright (c) 2017 Google LLC.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <atmel/samd21.dtsi>
+
+/ {
+	model = "Arduino Zero";
+	compatible = "arduino,zero", "atmel,samd21g18a", "atmel,samd21";
+
+	chosen {
+		zephyr,console = &sercom5;
+		zephyr,shell-uart = &sercom5;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+	};
+
+	/* These aliases are provided for compatibility with samples */
+	aliases {
+		led0 = &led0;
+		led1 = &led1;
+		led2 = &led2;
+		pwm-led0 = &pwm_led0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led0: led_0 {
+			gpios = <&porta 17 0>;
+			label = "LED";
+		};
+		led1: led_1 {
+			gpios = <&porta 27 0>;
+			label = "TX";
+		};
+		led2: led_2 {
+			gpios = <&portb 3 0>;
+			label = "RX";
+		};
+	};
+
+	pwmleds {
+		compatible = "pwm-leds";
+
+		pwm_led0: pwm_led_0 {
+			pwms = <&tcc2 1>;
+		};
+	};
+};
+
+&cpu0 {
+	clock-frequency = <48000000>;
+};
+
+&sercom0 {
+	status = "okay";
+	compatible = "atmel,sam0-uart";
+	current-speed = <115200>;
+	rxpo = <3>;
+	txpo = <1>;
+};
+
+&sercom5 {
+	status = "okay";
+	compatible = "atmel,sam0-uart";
+	current-speed = <115200>;
+	rxpo = <3>;
+	txpo = <1>;
+};
+
+&sercom4 {
+	status = "okay";
+	compatible = "atmel,sam0-spi";
+	dipo = <0>;
+	dopo = <1>;
+	#address-cells = <1>;
+	#size-cells = <0>;
+};
+
+&tcc2 {
+	status = "okay";
+	compatible = "atmel,sam0-tcc-pwm";
+	/* Gives a maximum period of 1.4 s */
+	prescaler = <1024>;
+
+	#pwm-cells = <1>;
+};
+
+&dac0 {
+	status = "okay";
+};
+
+&flash0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		/*
+		 * The final 16 KiB is reserved for the application.
+		 * Storage partition will be used by FCB/LittleFS/NVS
+		 * if enabled.
+		 */
+		storage_partition: partition@3c000 {
+			label = "storage";
+			reg = <0x0003c000 0x00004000>;
+		};
+	};
+};
+
+&usb0 {
+	status = "okay";
+};

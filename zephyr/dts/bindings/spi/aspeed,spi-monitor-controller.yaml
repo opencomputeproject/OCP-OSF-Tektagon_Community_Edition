@@ -1,0 +1,91 @@
+# Copyright (c) 2021 Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED SPI Monitor common controller node
+
+compatible: "aspeed,spi-monitor-controller"
+
+include: [base.yaml, aspeed-pinctrl.yaml]
+
+properties:
+  reg:
+    required: true
+
+  aspeed,scu:
+    type: phandle
+    required: true
+    description: phandle to SCU device tree node
+
+child-binding:
+  include: [aspeed-pinctrl.yaml]
+  description: SPI monitor physical controller node
+  properties:
+    reg:
+      type: int
+      required: true
+      description: Record the index(number) of SPI monitor controller.
+
+    interrupts:
+      type: array
+      required: false
+      description: interrupts for device
+
+    label:
+      type: string
+      required: true
+      description: Human readable string describing the device (used as device_get_binding() argument)
+
+    allow-cmds:
+      type: uint8-array
+      required: true
+      description: |
+        Assign the commands which should be filled
+        in allow command list table.
+
+        [cmd1 cmd2 ... cmdN];
+
+    write-forbidden-regions:
+      type: array
+      required: false
+      description: |
+        Assign the start address and the length of regions
+        which cannot be written.
+        The regions cannot be overlapped.
+
+        <start_address_1 length_1
+        start_address_2 length_2
+        ...
+        start_address_N length_N>;
+
+    read-forbidden-regions:
+      type: array
+      required: false
+      description: |
+        Assign the start address and the length of regions
+        which cannot be read.
+        The regions cannot be overlapped.
+
+        <start_address_1 length_1
+        start_address_2 length_2
+        ...
+        start_address_N length_N>;
+
+    log-ram-size:
+      type: int
+      required: false
+      description: |
+        The ram size for recording log if there is an invalid
+        SPI flash access and the related interrupt occurs.
+
+    extra-clk:
+      type: boolean
+      required: false
+      description: Block a invalid access by an extra clock.
+
+    pinctrl-0:
+      required: true
+
+    flash-device:
+      type: phandle
+      required: true
+      description: flash device controlled by the SPI monitor.

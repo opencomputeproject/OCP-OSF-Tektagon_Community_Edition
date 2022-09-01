@@ -1,0 +1,3 @@
+tests:
+  kernel.mailbox.usage:
+    tags: kernel

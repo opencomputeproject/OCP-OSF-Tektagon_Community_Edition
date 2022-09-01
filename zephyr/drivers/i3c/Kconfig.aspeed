@@ -1,0 +1,16 @@
+# ASPEED I3C driver configuration options
+
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config I3C_ASPEED
+	bool "ASPEED I3C driver"
+	depends on SOC_FAMILY_ASPEED
+	help
+	  This option enables the I3C master driver for ASPEED SoCs.
+
+if I3C_ASPEED
+config I3C_ASPEED_MAX_IBI_PAYLOAD
+	int "max IBI payload length including MDB"
+	default 256
+endif

@@ -1,0 +1,22 @@
+# STM32 CAN configuration options
+
+# Copyright (c) 2018 Alexander Wachter
+# SPDX-License-Identifier: Apache-2.0
+
+DT_COMPAT_ST_STM32_CAN := st,stm32-can
+
+config CAN_STM32
+	bool "STM32 CAN Driver"
+	default $(dt_compat_enabled,$(DT_COMPAT_ST_STM32_CAN))
+	help
+	  Enable STM32 CAN Driver.
+	  Tested on stm32F0, stm32L4 and stm32F7 series.
+
+config CAN_MAX_FILTER
+	int "Maximum number of concurrent active filters"
+	depends on CAN_STM32
+	default 5
+	range 1 56
+	help
+	  Defines the array size of the callback/msgq pointers.
+	  Must be at least the size of concurrent reads.

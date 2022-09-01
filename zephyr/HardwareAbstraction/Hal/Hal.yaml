@@ -1,0 +1,66 @@
+Features:
+  - feature:
+    name: Crypto
+    macro: CRYPTO_SUPPORT
+    description: Switch to enable crypto interface
+    enable: Yes
+  - feature:
+    name: Dice
+    macro: DICE_SUPPORT
+    description: Switch to enable Dice interface
+    enable: Yes
+  - feature:
+    name: CommonFlash
+    macro: COMMONFLASH_SUPPORT
+    description: Switch to enable CommonFlash interface
+    enable: Yes
+  - feature:
+    name: Gpio
+    macro: GPIO_SUPPORT
+    description: Switch to enable Gpio interface
+    enable: Yes
+  - feature:
+    name: I2c
+    macro: I2C_SUPPORT
+    description: Switch to enable I2c interface
+    enable: Yes
+  - feature:
+    name: Interrupt
+    macro: INTERRUPT_SUPPORT
+    description: Switch to enable Interrupt interface
+    enable: Yes
+  - feature:
+    name: Logging
+    macro: LOG_SUPPORT
+    description: Switch to enable Logging interface
+    enable: Yes
+  - feature:
+    name: Smbus
+    macro: SMBUS_SUPPORT
+    description: Switch to enable Smbus interface
+    enable: Yes
+  - feature:
+    name: SmbusFilter
+    macro: SMBUSFILTER_SUPPORT
+    description: Switch to enable SmbusFilter interface
+    enable: Yes
+  - feature:
+    name: Spi
+    macro: SPI_SUPPORT
+    description: Switch to enable Spi interface
+    enable: Yes
+  - feature:
+    name: SpiFilter
+    macro: SPIFILTER_SUPPORT
+    description: Switch to enable SpiFilter interface
+    enable: Yes
+  - feature:
+    name: Timer
+    macro: TIMER_SUPPORT
+    description: Switch to enable Timer interface
+    enable: Yes
+  - feature:
+    name: WatchDog
+    macro: WATCHDOG_SUPPORT
+    description: Switch to enable WatchDog interface
+    enable: Yes

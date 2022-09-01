@@ -1,0 +1,10 @@
+# ASPEED I3C driver configuration options
+
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config OTP_ASPEED
+	bool "ASPEED OTP Utility"
+	depends on SOC_FAMILY_ASPEED
+	help
+	  This option enables the OTP Utility for ASPEED SoCs.

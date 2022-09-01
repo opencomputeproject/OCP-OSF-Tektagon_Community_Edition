@@ -1,0 +1,23 @@
+# PINMUX configuration options for Aspeed SOC
+
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig PINMUX_ASPEED
+	bool "Aspeed SOC pinmux driver"
+	depends on SOC_FAMILY_ASPEED
+	help
+	  Enable driver for the Aspeed SOC pinmux driver
+
+config ARM_ICE
+	bool "Aspeed arm ice debug"
+	depends on PINMUX_ASPEED
+	help
+	  Enable arm ice pinmux for the Aspeed SOC debug
+	default y
+
+config PINCTRL_STRING_NAME
+	bool "Debug: print pin/signal with string name"
+	depends on PINMUX_ASPEED
+	help
+	  Create pin/signal string table for debug

@@ -1,0 +1,19 @@
+# GATT Services
+
+# Copyright (c) 2018 Nordic Semiconductor ASA
+# SPDX-License-Identifier: Apache-2.0
+
+menu "GATT Services"
+	depends on BT_CONN
+
+source "subsys/bluetooth/services/Kconfig.dis"
+
+source "subsys/bluetooth/services/Kconfig.bas"
+
+source "subsys/bluetooth/services/Kconfig.hrs"
+
+source "subsys/bluetooth/services/Kconfig.tps"
+
+source "subsys/bluetooth/services/ots/Kconfig"
+
+endmenu

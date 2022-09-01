@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: Apache-2.0
+
+if(CONFIG_GEN_ISR_TABLES)
+  zephyr_library()
+
+  zephyr_library_sources_ifdef(
+    CONFIG_GEN_ISR_TABLES
+    sw_isr_common.c
+    )
+endif()
+
+if(NOT CONFIG_ARCH_HAS_TIMING_FUNCTIONS AND
+    NOT CONFIG_SOC_HAS_TIMING_FUNCTIONS AND
+    NOT CONFIG_BOARD_HAS_TIMING_FUNCTIONS)
+zephyr_library_sources_ifdef(CONFIG_TIMING_FUNCTIONS timing.c)
+endif()
+
+# Put functions and data in their own binary sections so that ld can
+# garbage collect them
+zephyr_cc_option(-ffunction-sections -fdata-sections)
+
+zephyr_linker_sources_ifdef(CONFIG_GEN_ISR_TABLES
+  SECTIONS
+  ${ZEPHYR_BASE}/include/linker/intlist.ld
+)
+
+zephyr_linker_sources_ifdef(CONFIG_ARCH_HAS_RAMFUNC_SUPPORT
+  RAM_SECTIONS
+  ramfunc.ld
+)
+
+zephyr_linker_sources_ifdef(CONFIG_NOCACHE_MEMORY
+  RAM_SECTIONS
+  nocache.ld
+)
+
+# Only ARM, X86 and OPENISA_RV32M1_RISCV32 use ROM_START_OFFSET.
+if (DEFINED CONFIG_ARM OR DEFINED CONFIG_X86 OR DEFINED CONFIG_ARM64
+    OR DEFINED CONFIG_SOC_OPENISA_RV32M1_RISCV32)
+  zephyr_linker_sources(ROM_START SORT_KEY 0x0 rom_start_offset.ld)
+endif()
+
+
+# isr_tables is a normal CMake library and not a zephyr_library because it
+# should not be --whole-archive'd
+if (CONFIG_GEN_ISR_TABLES)
+  add_library(isr_tables
+    isr_tables.c
+  )
+
+  add_dependencies(isr_tables zephyr_generated_headers)
+  target_link_libraries(isr_tables zephyr_interface)
+  zephyr_library_link_libraries(isr_tables)
+endif()

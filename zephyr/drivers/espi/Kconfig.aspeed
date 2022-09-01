@@ -1,0 +1,12 @@
+# ASPEED eSPI driver configuration options
+
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config ESPI_ASPEED
+	bool "ASPEED eSPI slave driver"
+	depends on SOC_FAMILY_ASPEED
+	help
+	  This option enables the eSPI slave driver for ASPEED
+	  SoCs.
+	  Say y if you wish to use eSPI channels on ASPEED MCU.

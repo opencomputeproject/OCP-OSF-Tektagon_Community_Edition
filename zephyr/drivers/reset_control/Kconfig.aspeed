@@ -1,0 +1,8 @@
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config RESET_CONTROL_ASPEED
+	bool "ASPEED reset control"
+	depends on SOC_FAMILY_ASPEED
+	help
+	  This option enables ASPEED reset control driver.

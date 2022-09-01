@@ -1,0 +1,10 @@
+# I2C Filter configuration options
+
+# Copyright (c) 2021 Aspeed Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config I2C_PFR_FILTER
+	bool "I2C PFR Filter driver"
+	default n
+	help
+	  Enable I2C PFR Filter driver

@@ -1,0 +1,4 @@
+tests:
+  kernel.threads.apis:
+    tags: kernel threads userspace ignore_faults
+    min_flash: 34

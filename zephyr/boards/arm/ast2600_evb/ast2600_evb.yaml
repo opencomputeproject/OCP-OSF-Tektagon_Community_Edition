@@ -1,0 +1,15 @@
+identifier: ast2600_evb
+name: AST2600-EVB
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+supported:
+  - pwm
+  - gpio
+  - adc
+  - usb_device
+testing:
+  default: true
+ram: 32768
+flash: 512

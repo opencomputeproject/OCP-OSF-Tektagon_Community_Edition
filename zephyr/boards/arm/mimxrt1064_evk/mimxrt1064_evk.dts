@@ -1,0 +1,236 @@
+/*
+ * Copyright (c) 2018, NXP
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+#include <nxp/nxp_rt1064.dtsi>
+
+/ {
+	model = "NXP MIMXRT1064-EVK board";
+	compatible = "nxp,mimxrt1064";
+
+	aliases {
+		led0 = &green_led;
+		pwm-led0 = &green_pwm_led;
+		sw0 = &user_button;
+		kscan0 = &touch_controller;
+		usbd0 = &usb1;
+	};
+
+	chosen {
+		zephyr,flash-controller = &flexspi2;
+		zephyr,flash = &w25q32jvwj0;
+		zephyr,code-partition = &slot0_partition;
+		zephyr,sram = &sdram0;
+		zephyr,itcm = &itcm;
+		zephyr,dtcm = &dtcm;
+		zephyr,console = &lpuart1;
+		zephyr,shell-uart = &lpuart1;
+		zephyr,can-primary = &flexcan2;
+	};
+
+	sdram0: memory@80000000 {
+		/* Micron MT48LC16M16A2B4-6AIT:G */
+		device_type = "memory";
+		reg = <0x80000000 DT_SIZE_M(32)>;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		green_led: led-1 {
+			gpios = <&gpio1 9 GPIO_ACTIVE_LOW>;
+			label = "User LD1";
+		};
+	};
+
+	pwmleds {
+		compatible = "pwm-leds";
+
+		green_pwm_led: green_pwm_led {
+			pwms = <&flexpwm2_pwm3 0>;
+		};
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		user_button: button-1 {
+			label = "User SW8";
+			gpios = <&gpio5 0 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	arduino_header: connector {
+		compatible = "arduino-header-r3";
+		#gpio-cells = <2>;
+		gpio-map-mask = <0xffffffff 0xffffffc0>;
+		gpio-map-pass-thru = <0 0x3f>;
+		gpio-map = <0 0 &gpio1 26 0>,	/* A0 */
+			   <1 0 &gpio1 27 0>,	/* A1 */
+			   <2 0 &gpio1 20 0>,	/* A2 */
+			   <3 0 &gpio1 21 0>,	/* A3 */
+			   <4 0 &gpio1 17 0>,	/* A4 */
+			   <5 0 &gpio1 16 0>,	/* A5 */
+			   <6 0 &gpio1 23 0>,	/* D0 */
+			   <7 0 &gpio1 22 0>,	/* D1 */
+			   <8 0 &gpio1 11 0>,	/* D2 */
+			   <9 0 &gpio1 24 0>,	/* D3 */
+			   <10 0 &gpio1 9 0>,	/* D4 */
+			   <11 0 &gpio1 10 0>,	/* D5 */
+			   <12 0 &gpio1 18 0>,	/* D6 */
+			   <13 0 &gpio1 19 0>,	/* D7 */
+			   <14 0 &gpio1 3 0>,	/* D8 */
+			   <15 0 &gpio1 2 0>,	/* D9 */
+			   <16 0 &gpio3 13 0>,	/* D10 */
+			   <17 0 &gpio3 14 0>,	/* D11 */
+			   <18 0 &gpio3 15 0>,	/* D12 */
+			   <19 0 &gpio3 12 0>,	/* D13 */
+			   <20 0 &gpio1 17 0>,	/* D14 */
+			   <21 0 &gpio1 16 0>;	/* D15 */
+	};
+
+	panel {
+		compatible = "rocktech,rk043fn02h-ct";
+		port {
+			lcd_panel_in: endpoint {
+				remote-endpoint = <&lcd_panel_out>;
+			};
+		};
+	};
+};
+
+arduino_i2c: &lpi2c1 {};
+
+&lcdif {
+	status = "okay";
+	port {
+		lcd_panel_out: endpoint {
+			remote-endpoint = <&lcd_panel_in>;
+		};
+	};
+};
+
+&lpi2c1 {
+	status = "okay";
+
+	mt9m114@48 {
+		compatible = "aptina,mt9m114";
+		reg = <0x48>;
+		label = "MT9M114";
+		status = "okay";
+
+		port {
+			mt9m114_ep_out: endpoint {
+				remote-endpoint = <&csi_ep_in>;
+			};
+		};
+	};
+
+	touch_controller: ft5336@38 {
+		compatible = "focaltech,ft5336";
+		reg = <0x38>;
+		label = "FT5336";
+		int-gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
+	};
+};
+
+&flexspi {
+	status = "okay";
+	ahb-prefetch;
+	ahb-read-addr-opt;
+	rx-clock-source = <1>;
+	reg = <0x402a8000 0x4000>, <0x60000000 DT_SIZE_M(8)>;
+	is25wp064: is25wp064@0 {
+		compatible = "nxp,imx-flexspi-nor";
+		size = <67108864>;
+		label = "IS25WP064";
+		reg = <0>;
+		spi-max-frequency = <133000000>;
+		status = "okay";
+		jedec-id = [9d 70 17];
+
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			storage_partition: partition@0 {
+				label = "storage";
+				reg = <0x00000000 DT_SIZE_M(8)>;
+			};
+		};
+	};
+};
+
+&flexspi2 {
+	status = "okay";
+};
+
+&w25q32jvwj0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 DT_SIZE_K(64)>;
+		};
+		slot0_partition: partition@10000 {
+			label = "image-0";
+			reg = <0x00010000 DT_SIZE_K(1984)>;
+		};
+		slot1_partition: partition@200000 {
+			label = "image-1";
+			reg = <0x00200000 DT_SIZE_K(1984)>;
+		};
+		scratch_partition: partition@3f0000 {
+			label = "image-scratch";
+			reg = <0x003f0000 DT_SIZE_K(64)>;
+		};
+	};
+};
+
+&lpuart1 {
+	status = "okay";
+	current-speed = <115200>;
+};
+
+&enet {
+	status = "okay";
+	ptp {
+		status = "okay";
+	};
+};
+
+&usb1 {
+	status = "okay";
+};
+
+&csi {
+	status = "okay";
+	sensor-label = "MT9M114";
+
+	port {
+		csi_ep_in: endpoint {
+			remote-endpoint = <&mt9m114_ep_out>;
+		};
+	};
+};
+
+&flexpwm2_pwm3 {
+	status = "okay";
+};
+
+&usdhc1 {
+	status = "okay";
+	pwr-gpios = <&gpio1 5 GPIO_ACTIVE_HIGH>;
+	cd-gpios = <&gpio2 28 GPIO_ACTIVE_LOW>;
+};
+
+&flexcan2 {
+	status = "okay";
+	bus-speed = <125000>;
+};

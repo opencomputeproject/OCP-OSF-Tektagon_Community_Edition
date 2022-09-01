@@ -1,0 +1,14 @@
+# TMP112 temperature sensor configuration options
+
+# Copyright (c) 2016 Firmwave
+# SPDX-License-Identifier: Apache-2.0
+
+config TMP112
+	bool "TMP112 Temperature Sensor"
+	depends on I2C
+	help
+	  Enable the driver for Texas Instruments TMP112 High-Accuracy Digital
+	  Temperature Sensors.
+
+	  The TMP102 is compatible with the TMP112 but is less accurate and has
+	  been successfully tested with this driver.

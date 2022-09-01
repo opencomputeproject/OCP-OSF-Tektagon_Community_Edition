@@ -1,0 +1,4 @@
+tests:
+  arch.common.xip:
+    filter: CONFIG_XIP
+    tags: kernel xip

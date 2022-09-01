@@ -1,0 +1,29 @@
+# JTAG configuration options
+
+# Copyright (c) 2021 Aspeed
+# SPDX-License-Identifier: Apache-2.0
+
+#
+# JTAG options
+#
+menuconfig JTAG
+	bool "JTAG drivers"
+	help
+	  Enable JTAG driver configuration.
+
+if JTAG
+
+config JTAG_SHELL
+	bool "Enable JTAG Shell"
+	default y
+	depends on SHELL
+	help
+	  Enable JTAG Shell for testing.
+
+module = JTAG
+module-str = JTAG
+source "subsys/logging/Kconfig.template.log_config"
+
+source "drivers/jtag/Kconfig.aspeed"
+
+endif

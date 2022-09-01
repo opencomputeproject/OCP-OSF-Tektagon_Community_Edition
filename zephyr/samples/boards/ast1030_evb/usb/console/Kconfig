@@ -1,0 +1,7 @@
+# Copyright (c) 2021 Aspeed Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config USB_DEVICE_PID
+	default USB_PID_CONSOLE_SAMPLE
+
+source "Kconfig.zephyr"

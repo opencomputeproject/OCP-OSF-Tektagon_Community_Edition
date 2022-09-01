@@ -1,0 +1,13 @@
+sample:
+  name: I3C driver sample
+tests:
+  sample.drivers.i3c:
+    tags: I3C
+    depends_on: i3c
+    platform_allow: ast1030_evb ast2600_evb
+    harness: console
+    timeout: 10
+    harness_config:
+      type: one_line
+      regex:
+        - "I3C reading: (.*)"

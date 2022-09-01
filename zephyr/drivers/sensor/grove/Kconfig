@@ -1,0 +1,18 @@
+# Drivers configuration options for SeeedStudio Grove Devices
+
+# Copyright (c) 2015 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+config GROVE_LIGHT_SENSOR
+	bool "Enable the Seeed Grove Light Sensor"
+	depends on ADC && !MINIMAL_LIBC
+	help
+	  Setting this value will enable driver support for the Grove Light
+	  Sensor.
+
+config GROVE_TEMPERATURE_SENSOR
+	bool "Enable the Seeed Grove Temperature Sensor"
+	depends on ADC && !MINIMAL_LIBC
+	help
+	  Setting this value will enable driver support for the Grove
+	  Temperature Sensor.

@@ -1,0 +1,48 @@
+# Copyright (c) 2021, ASPEED
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED eSPI
+
+compatible: "aspeed,espi"
+
+include: espi-controller.yaml
+
+properties:
+    reg:
+      description: mmio register space
+      required: true
+
+    aspeed,scu:
+      type: phandle
+      required: true
+      description: phandle to SCU device tree node
+
+    perif,dma-mode:
+      type: boolean
+      required: false
+      description: enable DMA for peripheral channel
+
+    perif,memcyc-src-addr:
+      type: int
+      required: true
+      description: host side decoding address of memory cycle
+
+    perif,memcyc-size:
+      type: int
+      required: true
+      description: region size for memory cycle
+
+    oob,dma-mode:
+      type: boolean
+      required: false
+      description: enable DMA for OOB channel
+
+    flash,dma-mode:
+      type: boolean
+      required: false
+      description: enable DMA for flash channel
+
+    flash,safs-mode:
+      type: int
+      required: true
+      description: select the SAFS mode (0->mix, 1->hw, 2->sw), don't care for MAFS

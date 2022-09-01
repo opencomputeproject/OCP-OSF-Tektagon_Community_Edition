@@ -1,0 +1,38 @@
+# Copyright (c) 2021 ASPEED
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED PECI controller
+
+compatible: "aspeed,peci"
+
+include: peci.yaml
+
+properties:
+    byte-mode-64:
+      type: boolean
+      description: Enable the peci 64-byte mode.
+      required: false
+    
+    cmd-timeout-ms:
+      type: int
+      description: |
+        Command timeout in units of ms.
+      default: 1000
+    
+    rd-sampling-point:
+      type: int
+      description: |
+        Read sampling point selection. The whole period of a bit time will be
+        divided into 16 time frames. This value will determine the time frame
+        in which the controller will sample PECI signal for data read back.
+        Usually in the middle of a bit time is the best.
+      default: 8
+
+    reg:
+      required: true
+
+    interrupts:
+      required: true
+    
+    clocks:
+      required: true

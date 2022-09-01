@@ -1,0 +1,12 @@
+# ASPEED JTAG driver configuration options
+
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config JTAG_ASPEED
+	bool "ASPEED JTAG driver"
+	depends on SOC_FAMILY_ASPEED
+	help
+	  This option enables the JTAG driver for ASPEED family of
+	  processors.
+	  Say y if you wish to use JTAG channels on ASPEED MCU.

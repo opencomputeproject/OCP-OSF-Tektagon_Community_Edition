@@ -1,0 +1,13 @@
+# iMX7 M4 UART
+
+# Copyright (c) 2018, NXP
+# SPDX-License-Identifier: Apache-2.0
+
+config UART_IMX
+	bool "NXP i.MX7 family processor UART driver"
+	select SERIAL_HAS_DRIVER
+	select SERIAL_SUPPORT_INTERRUPT
+	depends on HAS_IMX_HAL
+	help
+	  This option enables the UART driver for NXP i.MX7
+	  family processors.

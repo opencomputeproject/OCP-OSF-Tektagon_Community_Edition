@@ -1,0 +1,22 @@
+# Copyright (c) 2021 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+# Common fields for I3C devices
+
+include: base.yaml
+
+bus: i3c
+
+properties:
+    label:
+      required: true
+    i2c-scl-hz:
+      required: false
+      type: int
+      default: 1000000
+      description: I2C mode and Open-drain mode SCL frequency in HZ
+    i3c-scl-hz:
+      required: false
+      type: int
+      default: 12500000
+      description: I3C Push-Pull mode SCL frequency in HZ

@@ -1,0 +1,34 @@
+# i.MX 6SoloX
+
+# Copyright (c) 2018, NXP
+# SPDX-License-Identifier: Apache-2.0
+
+if SOC_MCIMX6X_M4
+
+config SOC
+	default "mcimx6x"
+
+config FPU
+	default y
+
+config GPIO_IMX
+	default y
+	depends on GPIO
+
+config UART_IMX
+	default y
+	depends on SERIAL
+
+config I2C_IMX
+	default y
+	depends on I2C
+
+config IPM_IMX
+	default y
+	depends on IPM
+
+config COUNTER_IMX_EPIT
+	default y
+	depends on COUNTER
+
+endif # SOC_MCIMX6X_M4

@@ -1,0 +1,3 @@
+&jtag1 {
+        status = "okay";
+};

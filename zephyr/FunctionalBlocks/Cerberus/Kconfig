@@ -1,0 +1,4 @@
+config CERBERUS
+	bool "Enable tektagonoe Cerberus layer"
+	help
+	  This option enables the Hierarchical FuncationalBlock

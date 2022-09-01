@@ -1,0 +1,13 @@
+identifier: ast1060_evb
+name: AST1060-EVB
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+supported:
+  - i2c
+  - spi
+testing:
+  default: true
+ram: 768
+flash: 512

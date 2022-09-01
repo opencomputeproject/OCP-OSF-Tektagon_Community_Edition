@@ -1,0 +1,4 @@
+config TEKTAGONOE
+	bool "Enable tektagonoe Wrapper layer"
+	help
+	  This option enables the Hierarchical Wrapperlibrary

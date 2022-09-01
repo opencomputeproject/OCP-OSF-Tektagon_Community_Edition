@@ -1,0 +1,1 @@
+add_subdirectory_ifdef(CONFIG_AST1060 AST1060)

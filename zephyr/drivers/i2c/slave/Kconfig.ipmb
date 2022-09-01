@@ -1,0 +1,10 @@
+# I2C IPMB Slave configuration options
+
+# Copyright (c) 2021 Aspeed Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config I2C_IPMB_SLAVE
+	bool "I2C Slave IPMB driver"
+	default n
+	help
+	  Enable virtual I2C Slave IPMB driver

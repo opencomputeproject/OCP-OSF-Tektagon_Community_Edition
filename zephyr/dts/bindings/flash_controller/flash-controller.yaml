@@ -1,0 +1,26 @@
+# Common fields for flash controllers
+
+include: base.yaml
+
+properties:
+    label:
+      required: true
+
+    reg:
+      required: true
+
+    spi-ctrl-caps-mask:
+      type: int
+      required: false
+      description: |
+        A 32-bit value. Assign SPI protocol type which is
+        NOT supported by the spi-nor flash controller.
+        bit 0 : 1-1-1
+        bit 1 : 1-1-1 (fast read)
+        bit 8 : 1-1-2
+        bit 9 : 1-2-2
+        bit 10: 2-2-2
+        bit 16: 1-1-4
+        bit 17: 1-4-4
+        bit 18: 4-4-4
+

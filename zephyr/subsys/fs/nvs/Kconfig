@@ -1,0 +1,17 @@
+# Non-volatile Storage NVS
+
+# Copyright (c) 2018 Laczen
+# SPDX-License-Identifier: Apache-2.0
+
+config NVS
+	bool "Non-volatile Storage"
+	help
+	  Enable support of Non-volatile Storage.
+
+if NVS
+
+module = NVS
+module-str = nvs
+source "subsys/logging/Kconfig.template.log_config"
+
+endif # NVS

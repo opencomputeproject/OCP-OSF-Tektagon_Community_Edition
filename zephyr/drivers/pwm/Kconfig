@@ -1,0 +1,68 @@
+# PWM configuration options
+
+# Copyright (c) 2015 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig PWM
+	bool "PWM (Pulse Width Modulation) Drivers"
+	help
+	  Enable config options for PWM drivers.
+
+if PWM
+
+module = PWM
+module-str = pwm
+source "subsys/logging/Kconfig.template.log_config"
+
+config PWM_SHELL
+	bool "Enable PWM shell"
+	default y
+	depends on SHELL
+	help
+	  Enable the PWM related shell commands.
+
+config PWM_CAPTURE
+	bool "Provide API for PWM capture"
+	help
+	  This option extends the Zephyr PWM API with the ability to capture PWM
+	  period/pulse widths.
+
+source "drivers/pwm/Kconfig.aspeed"
+
+source "drivers/pwm/Kconfig.stm32"
+
+source "drivers/pwm/Kconfig.sifive"
+
+source "drivers/pwm/Kconfig.nrf5_sw"
+
+source "drivers/pwm/Kconfig.nrfx"
+
+source "drivers/pwm/Kconfig.mcux_ftm"
+
+source "drivers/pwm/Kconfig.imx"
+
+source "drivers/pwm/Kconfig.esp32"
+
+source "drivers/pwm/Kconfig.sam"
+
+source "drivers/pwm/Kconfig.mcux"
+
+source "drivers/pwm/Kconfig.xec"
+
+source "drivers/pwm/Kconfig.litex"
+
+source "drivers/pwm/Kconfig.rv32m1_tpm"
+
+source "drivers/pwm/Kconfig.mcux_tpm"
+
+source "drivers/pwm/Kconfig.sam0"
+
+source "drivers/pwm/Kconfig.npcx"
+
+source "drivers/pwm/Kconfig.xlnx"
+
+source "drivers/pwm/Kconfig.mcux_pwt"
+
+source "drivers/pwm/Kconfig.gecko"
+
+endif # PWM

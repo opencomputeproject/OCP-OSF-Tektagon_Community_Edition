@@ -1,0 +1,17 @@
+#
+# Copyright (c) ASPEED
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+description: ASPEED I2C IPMB device
+
+compatible: "aspeed,ipmb"
+
+include: i2c-device.yaml
+
+properties:
+    size:
+      type: int
+      required: true
+      description: Total IPMB page size

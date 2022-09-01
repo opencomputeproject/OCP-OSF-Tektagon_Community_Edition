@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (c) 2021 ASPEED Technology Inc.
+
+menuconfig IPMI
+	bool "IPMI Driver"
+	help
+	  Enable IPMI Driver.
+
+if IPMI
+
+source "drivers/ipmi/Kconfig.aspeed"
+
+endif # IPMI

@@ -1,0 +1,13 @@
+sample:
+  description: Test wpan_serial sample
+  name: wpan_serial
+common:
+    depends_on: usb_device
+    harness: net
+    tags: usb ieee802154
+tests:
+  sample.net.wpan.serial:
+    depends_on: ieee802154
+  sample.net.wpan_serial.frdm_cr20a:
+    extra_args: SHIELD=frdm_cr20a
+    platform_allow: frdm_k64f

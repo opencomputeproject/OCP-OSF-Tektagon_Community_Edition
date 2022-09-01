@@ -1,0 +1,25 @@
+# Copyright (c) 2021, ASPEED
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED I3C MQueue device
+
+compatible: "aspeed,i3c-slave-mqueue"
+
+include: base.yaml
+
+on-bus: i3c
+
+properties:
+    msg-size:
+      type: int
+      required: true
+      description: the size of the single message in byte
+    num-of-msgs:
+      type: int
+      required: true
+      description: number of the messages
+    mandatory-data-byte:
+      type: int
+      required: true
+      description: mandatory data byte (MDB) when sending IBI.
+                   See https://www.mipi.org/MIPI_I3C_mandatory_data_byte_values_public for detail.

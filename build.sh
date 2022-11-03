@@ -45,13 +45,13 @@ west_base_build() {
 action=$1
 
 case "$action" in
-    west)
+    tektagon)
         args=( $@ )
 
-        build_dir=${args[1]}
-        platform=${args[2]}
-        project_name=${args[3]}
-        wrk_dir=${args[4]}
+        build_dir=build
+        platform=ast1060_evb
+        project_name='ApplicationLayer/tektagon'
+        wrk_dir=$(pwd)
 
         west_dependencies $wrk_dir
 

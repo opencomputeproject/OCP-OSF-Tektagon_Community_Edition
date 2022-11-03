@@ -6,6 +6,7 @@ projects/*
 !projects/gcc
 !projects/keil
 !projects/linux
+!projects/zephyr
 build
 .vscode
 *~

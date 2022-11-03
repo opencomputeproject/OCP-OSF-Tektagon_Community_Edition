@@ -64,7 +64,7 @@ Follow the numbered steps below to setup your Linux environment to build.
 20.	sudo udevadm control --reload
 
 ## Building Zephyr/Tektagon
-To build zephyr run “bash build.sh” under root folder. It will initialize west and update west modules for first build which might take time. From next build it starts with building sources. 
+To build zephyr run “bash build.sh tektagon” under root folder. It will initialize west and update west modules for first build which might take time. From next build it starts with building sources. 
 
 You can find zephyr.elf under build directory.!
 # Programming AST1060

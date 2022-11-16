@@ -202,13 +202,13 @@ Features:
     macro: CONFIG_INTEL_PFR_SUPPORT
     description: Intel Pfr Support
     path:
-    enable: false
+    enable: true
   - feature:
     name: CERBERUS_PFR_SUPPORT
     macro: CONFIG_CERBERUS_PFR_SUPPORT
     description: Cerberus Pfr Support
     path:
-    enable: true
+    enable: false
   - feature:
     name: MBEDTLS_ECP_NIST_OPTIM
     macro: CONFIG_MBEDTLS_ECP_NIST_OPTIM

@@ -1,5 +1,0 @@
-tests:
-  system.settings.nvs:
-    depends_on: nvs
-    min_ram: 32
-    tags: settings_nvs

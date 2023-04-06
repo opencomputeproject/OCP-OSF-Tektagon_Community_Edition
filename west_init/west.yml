@@ -1,0 +1,31 @@
+#***********************************************************************
+#*                                                                     *
+#*                  Copyright (c) 1985-2023, AMI.                      *
+#*                                                                     *
+#*      All rights reserved. Subject to AMI licensing agreement.       *
+#*                                                                     *
+#***********************************************************************
+
+
+manifest:
+  self:
+    path: Tektagon-OpenEdition
+
+  remotes:
+    - name: github
+      url-base: https://github.com/AspeedTech-BMC
+    - name: cerberus-github
+      url-base: https://github.com/Azure
+  projects:
+    - name: zephyr
+      remote: github
+      revision: e33ef8c893edd2379109a4b718c4ac32ef14351f
+      import:
+        name-whitelist:
+          - cmsis
+          - mbedtls
+      path: oe-src/
+    - name: Project-Cerberus
+      remote: cerberus-github
+      revision: b71c6353803aa9062354140e6bc06f707fe9908f
+      path: oe-src/FunctionalBlocks/Cerberus/

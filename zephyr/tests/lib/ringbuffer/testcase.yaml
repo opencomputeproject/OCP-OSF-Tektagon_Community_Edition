@@ -1,5 +1,0 @@
-tests:
-  libraries.data_structures:
-    tags: ring_buffer circular_buffer
-    integration_platforms:
-      - native_posix

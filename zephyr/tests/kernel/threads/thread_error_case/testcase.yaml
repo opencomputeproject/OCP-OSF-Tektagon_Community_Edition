@@ -1,4 +1,0 @@
-tests:
-  kernel.threads.error.case:
-    tags: kernel threads userspace ignore_faults
-    filter: CONFIG_USERSPACE

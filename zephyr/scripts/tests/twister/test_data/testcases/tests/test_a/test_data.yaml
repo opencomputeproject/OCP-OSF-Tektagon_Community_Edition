@@ -1,7 +1,0 @@
-tests:
-  test_a.check_1:
-    tags: test_a
-    build_only: True
-  test_a.check_2:
-    extra_args: CONF_FILE="test.conf"
-    tags: test_a

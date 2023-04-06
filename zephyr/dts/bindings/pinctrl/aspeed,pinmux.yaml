@@ -1,5 +1,0 @@
-description: ASPEED Pinmux
-
-compatible: "aspeed,pinmux"
-
-include: base.yaml

@@ -1,5 +1,0 @@
-description: Nordic nRF family UARTE (UART with EasyDMA)
-
-compatible: "nordic,nrf-uarte"
-
-include: nordic,nrf-uart-common.yaml

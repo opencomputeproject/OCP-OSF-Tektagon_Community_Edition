@@ -45,6 +45,7 @@ START OF MAINTAINERS LIST
 M:  Presanna Raman <presannar@ami.com>
 M:  Sing-u Byers <singlub@ami.com>
 M:  Zach Bobroff <zacharyb@ami.com>
+M:  Vignesh Kumar S <vigneshkumars@ami.com>
 
 NOTE: 
 Some of the directories won’t have maintainers because it comes from the openBMC repo.  in those cases, a maintainer or reviewer will be identified IF code is

@@ -1,0 +1,16 @@
+diff --git a/oe-src/FunctionalBlocks/Cerberus/core/crypto/rsa.h b/oe-src/FunctionalBlocks/Cerberus/core/crypto/rsa.h
+index f79463f4..dc9348ad 100644
+--- a/oe-src/FunctionalBlocks/Cerberus/core/crypto/rsa.h
++++ b/oe-src/FunctionalBlocks/Cerberus/core/crypto/rsa.h
+@@ -35,8 +35,9 @@ struct rsa_private_key {
+  * Defines the information for an RSA public key.
+  */
+ struct rsa_public_key {
+-	uint8_t modulus[RSA_MAX_KEY_LENGTH];	/**< The RSA key pair modulus. */
+-	size_t mod_length;						/**< The length of the modulus. */
++	uint16_t mod_length;						/**< The length of the modulus. */
++	uint8_t modulus[RSA_KEY_LENGTH_2K];	/**< The RSA key pair modulus. */
++	uint8_t exponent_length;        //The RSA public exponent length
+ 	uint32_t exponent;						/**< The RSA public exponent. */
+ } __attribute__ ((__packed__));
+ 

@@ -1,8 +1,0 @@
-tests:
-  system.mutex:
-    filter: CONFIG_ARCH_HAS_USERSPACE
-    tags: kernel userspace
-  system.mutex.nouser:
-    tags: kernel
-    extra_configs:
-      - CONFIG_TEST_USERSPACE=n

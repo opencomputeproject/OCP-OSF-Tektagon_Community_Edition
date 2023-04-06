@@ -1,4 +1,0 @@
-tests:
-  drivers.i2s.speed:
-    depends_on: i2s
-    tags: drivers i2s

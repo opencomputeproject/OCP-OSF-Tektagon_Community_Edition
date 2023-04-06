@@ -1,8 +1,0 @@
-common:
-   tags: lorawan
-sample:
-   description: Demonstration of Class-A LoRaWAN functionality
-   name: LoRaWAN Class-A
-tests:
-   samples.lorawan.class_a:
-     platform_allow: 96b_wistrio

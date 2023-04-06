@@ -1,5 +1,0 @@
-common:
-  tags: net socket tls
-tests:
-  net.socket.tls:
-    min_ram: 65536

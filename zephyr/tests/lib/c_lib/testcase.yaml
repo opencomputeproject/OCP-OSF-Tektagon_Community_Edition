@@ -1,4 +1,0 @@
-tests:
-  libraries.libc:
-    tags: clib ignore_faults
-    platform_exclude: native_posix native_posix_64 nrf52_bsim

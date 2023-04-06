@@ -1,4 +1,0 @@
-tests:
-  net.ipv6:
-    tags: net ipv6
-    depends_on: netif

@@ -1,6 +1,0 @@
-common:
-  depends_on: ieee802154
-tests:
-  net.ieee802154.l2:
-    min_ram: 16
-    tags: net ieee802154 l2

@@ -69,8 +69,15 @@ To build zephyr run “bash build.sh tektagon” under root folder. It will init
 You can find zephyr.elf under build directory.!
 # Programming AST1060
 Refer to the [Aspeed Zephy SDK User Guide](https://github.com/AspeedTech-BMC/zephyr/releases/download/v00.01.05/Aspeed_Zephy_SDK_User_Guide_v00.01.05.pdf) section 3.4.1.2 SPI Flash Boot for steps to program the firmware onto the AST1060 EVB flash. On other platforms pl. refer to the platform documentation on flashing the firmware.
+
 # Release Information
-## version 1.00.0000
+## version 1.1.00
+-	Following changes are done in this version
+    -	Restructured the repo in such a way to clone the zephyr and cerberus source instead of keeping them as a source copy
+    -	Added the patches for security vulnerability issues those will be applied during build time
+    -	Added fixes for the issues reported in this OCP repo
+
+## version 1.0.00
 -	Intel PFR T-1 Operations
     -	Intel PFR BMC Active region verification
     -	Intel PFR PCH Active region verification
@@ -99,4 +106,5 @@ Refer to the [Aspeed Zephy SDK User Guide](https://github.com/AspeedTech-BMC/zep
     -	YafuFlash tool for users to do the firmware update from BMC
 -	Anti-Rollback
     -	BMC/PCH/1060 is not allowed to rollback to old SVN number
+
 # Known Sightings

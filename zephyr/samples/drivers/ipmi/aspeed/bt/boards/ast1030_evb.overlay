@@ -1,5 +1,0 @@
-&bt {
-	status = "okay";
-	addr = <0xe4>;
-	sirq = <10>;
-};

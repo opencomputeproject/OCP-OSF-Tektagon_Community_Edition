@@ -1,5 +1,6 @@
 # Introduction
 Tektagon Open Edition (OE) is a HRoT orchestration firmware solution for the AST1060 SOC. It provides Intel PFR 2.0 HRoT solution.
+
 # Source code Layout
 The Tektagon OE solution based on common core has a baseline functionality that can be adapted and ported to various platforms. Where this can be reused for various platforms by modifying theabstraction layers.In Tektagon source tree OS zephyr will be the base layer and under base application and other modules are added as subdirectories. Where the Tektagon source tree structure under Zephyr base is as follows.
 
@@ -27,7 +28,9 @@ The Tektagon OE solution based on common core has a baseline functionality that 
 | Subsys |	Sub systems supported based on zephyr |
 | Tests |	Unit test suite for zephyr samples |
 | Wrapper |	Wrapper function for Application layer is implemented |
+
 # Building Firmware sources
+
 ## Clone the repo to your Linux machine
 Follow the steps below to properly clone the repo from your terminal.
 
@@ -39,7 +42,7 @@ Optional steps to perform
 2.	git submodule update --init --recursive
 3.	git submodule update --remote
 
-## Setup & Build Zephyr/Tektagon
+## Setup & Build Zephyr/Tektagon in Linux environment
 Follow the numbered steps below to setup your Linux environment to build.
 
 1.	wget http://apt.kitware.com/kitware-archive.sh
@@ -63,10 +66,89 @@ Follow the numbered steps below to setup your Linux environment to build.
 19.	sudo cp ~/zephyr-sdk-0.13.2/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
 20.	sudo udevadm control --reload
 
-## Building Zephyr/Tektagon
+### Building Zephyr/Tektagon in Linux environment
 To build zephyr run “bash build.sh tektagon” under root folder. It will initialize west and update west modules for first build which might take time. From next build it starts with building sources. 
 
 You can find zephyr.elf under build directory.!
+
+## Setup & Build Zephyr/Tektagon in Windows environment
+
+Follow these steps to:
+
+-	Set up a command-line Zephyr development environment on Windows 
+-	Get the source code and Build
+
+### Install dependencies for Windows build
+
+1. Install chocolatey, using the steps provided in the below URL
+https://chocolatey.org/install
+
+2. Open a cmd.exe terminal window as Administrator. To do so, press the Windows key, type cmd.exe, right-click the Command Prompt search result, and choose Run as Administrator.
+
+3. Disable global confirmation to avoid having to confirm the installation of individual programs:
+`choco feature enable -n allowGlobalConfirmation`
+
+4. Use choco to install the required dependencies:
+```
+choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+choco install ninja gperf python311 git dtc-msys2 wget 7zip
+```
+
+5. Download the Zephyr SDK bundle:
+```
+cd %HOMEPATH%
+wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.0/zephyr-sdk-0.17.0_windows-x86_64.7z
+```
+
+6. Extract the Zephyr SDK bundle archive:
+`7z x zephyr-sdk-0.17.0_windows-x86_64.7z`
+
+7. Run the Zephyr SDK bundle setup script:
+```
+cd zephyr-sdk-0.17.0
+setup.cmd
+```
+
+8. Download GNU Arm Embedded Toolchain from this URL "https://developer.arm.com/downloads/-/gnu-rm/10-3-2021-10"
+gcc-arm-none-eabi-10.3-2021.10-win32.exe
+
+9. Install "gcc-arm-none-eabi-10.3-2021.10-win32.exe" in the path C:\gnu_arm_embedded
+
+10. Set these variables in system environment variables
+```
+ZEPHYR_TOOLCHAIN_VARIANT = gnuarmemb
+GNUARMEMB_TOOLCHAIN_PATH = C:\gnu_arm_embedded
+```
+
+11. Install west using this command:
+`pip install west`
+
+12. Close the terminal window.
+
+### Clone and Build the OCP Tektagon CE project in Windows
+13. Open a cmd.exe terminal window as a regular user
+
+14. Clone the OCP Tektagon Community Edition repository using the following command:
+```
+cd %HOMEPATH%
+git clone --recurse-submodules https://github.com/opencomputeproject/OCP-OSF-Tektagon_Community_Edition.git
+```
+Note: Ensure that Git is installed on your system, and the Git executable path is properly configured in the PATH environment variable.
+
+15. Run the build command:
+```
+cd OCP-OSF-Tektagon_Community_Edition
+build.cmd tektagon
+```
+
+16. During the first build, the script will initialize west and update west modules, which might take some time. Subsequent builds will start directly with source compilation.
+
+17. Verify that the project builds successfully.
+
+18. Run the build command again to ensure no dependency updates occur, and the build starts directly.
+
+19. You can find zephyr.elf, zephyr.bin, uart_zephyr.bin under build directory \OCP-OSF-Tektagon_Community_Edition\oe-src\build\zephyr.
+
 # Programming AST1060
 Refer to the [Aspeed Zephy SDK User Guide](https://github.com/AspeedTech-BMC/zephyr/releases/download/v00.01.05/Aspeed_Zephy_SDK_User_Guide_v00.01.05.pdf) section 3.4.1.2 SPI Flash Boot for steps to program the firmware onto the AST1060 EVB flash. On other platforms pl. refer to the platform documentation on flashing the firmware.
 
@@ -108,3 +190,4 @@ Refer to the [Aspeed Zephy SDK User Guide](https://github.com/AspeedTech-BMC/zep
     -	BMC/PCH/1060 is not allowed to rollback to old SVN number
 
 # Known Sightings
+- Nil
